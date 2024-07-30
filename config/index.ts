@@ -1,44 +1,78 @@
 export const PRODUCT_CATEGORIES = [
   {
-    label: 'UI Kits',
-    value: 'ui_kits' as const,
+    label: 'CC Camera',
+    value: 'cc' as const,
     featured: [
       {
-        name: 'Editor picks',
-        href: `/products?category=ui_kits`,
-        imageSrc: '/nav/ui-kits/mixed.jpg',
+        name: 'Ours picks',
+        href: `/products?category=products_kits`,
+        imageSrc: '/images/nav/cctv.webp',
       },
       {
         name: 'New Arrivals',
-        href: '/products?category=ui_kits&sort=desc',
-        imageSrc: '/nav/ui-kits/blue.jpg',
+        href: '/products?category=products_kits&sort=desc',
+        imageSrc: '/images/nav/cctv.webp',
+      },
+        {
+        name: 'Video recorder',
+        href: '/products?category=icons',
+        imageSrc: '/images/nav/cctv.webp',
       },
       {
         name: 'Bestsellers',
-        href: '/products?category=ui_kits',
-        imageSrc: '/nav/ui-kits/purple.jpg',
+        href: '/products?category=products_kits',
+        imageSrc: '/images/nav/cctv.webp',
       },
     ],
   },
   {
-    label: 'Icons',
+    label: 'Networking',
     value: 'icons' as const,
     featured: [
       {
-        name: 'Favorite Icon Picks',
+        name: 'Switch',
         href: `/products?category=icons`,
-        imageSrc: '/nav/icons/picks.jpg',
+        imageSrc: '/images/nav/switch.webp',
+      },
+      {
+        name: 'Hub',
+        href: '/products?category=icons',
+        imageSrc: '/images/nav/hu.webp',
+      },
+    
+      {
+        name: 'New Arrivals',
+        href: '/products?category=icons&sort=desc',
+        imageSrc: '/images/nav/switch.webp',
+      },
+      
+    ],
+  },
+    {
+    label: 'Others',
+    value: 'icons' as const,
+    featured: [
+      {
+        name: 'Computers',
+        href: `/products?category=icons`,
+        imageSrc: '/images/nav/computer.jpg',
+      },
+      {
+        name: 'Laptops',
+        href: '/products?category=icons',
+        imageSrc: '/images/nav/laptop.jpg',
+      },
+      {
+        name: 'SSD Card',
+        href: '/products?category=icons',
+        imageSrc: '/images/nav/icons/bestsellers.jpg',
       },
       {
         name: 'New Arrivals',
         href: '/products?category=icons&sort=desc',
-        imageSrc: '/nav/icons/new.jpg',
+        imageSrc: '/images/nav/computer.jpg',
       },
-      {
-        name: 'Bestselling Icons',
-        href: '/products?category=icons',
-        imageSrc: '/nav/icons/bestsellers.jpg',
-      },
+      
     ],
   },
 ]

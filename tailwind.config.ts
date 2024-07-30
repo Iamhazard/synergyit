@@ -17,6 +17,9 @@ const config = {
         "2xl": "1400px",
       },
     },
+     backgroundImage: {   
+        "imageurl": "url('/images/nav/image.webp')",
+      },
     extend: {
       colors: {
         border: "hsl(var(--border))",

@@ -6,6 +6,8 @@ import { IoHardwareChip } from "react-icons/io5";
 import { GiCctvCamera } from "react-icons/gi";
 import Link from "next/link";
 import ProductReel from "@/components/products/Products";
+import { Separator } from "@/components/ui/separator";
+
 
 const perks = [
   {
@@ -31,13 +33,16 @@ const perks = [
 export default function Home() {
   return (
     <>
+      <div className="bgimage">
+        <div className="gradient" />
+      </div>
       <MaxWidthWrapper>
-        <div className="py-20 mx-auto text-center flex flex-col items-center max-w-3xl">
-          <h1 className="text-4xl font-bold tracking-tight text-gray-900  sm:text-6xl ">
+        <div className="py-[220px] mx-auto text-center flex flex-col items-center max-w-3xl ">
+          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl ">
             Your Marketplace for high-quality {""}
             <span className="text-blue-600">Tech Product </span>.
           </h1>
-          <p className="mt-6 text-lg max-w-prose text-muted-foreground">
+          <p className="mt-6 text-lg max-w-prose text-white">
             Synergy IT is in market to provide the service of Computer Network design LAN and WAN design for running critical corporate sectors like banks, hospitals and government sectors.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 mt-6 ">
@@ -45,17 +50,22 @@ export default function Home() {
               Our Mission{" "}
             </Link>
             <Link href='/me/aboutUs'>
-              <Button variant="ghost"> About US &rarr;</Button>
+              <Button variant="btn"> About US &rarr;</Button>
             </Link>
           </div>
         </div>
 
         {/* product */}
-        <ProductReel
-          query={{ sort: 'desc', limit: 4 }}
-          href='/products?sort=recent'
-          title='Our Products'
-        />
+        <div className="mt-12">
+          <ProductReel
+            query={{ sort: 'desc', limit: 4 }}
+            href='/products?sort=recent'
+            title='Our Products'
+          />
+        </div>
+
+
+
       </MaxWidthWrapper>
 
       <section className="border-t border-gray-300 bg-gray-50">
@@ -80,6 +90,10 @@ export default function Home() {
                 </div>
               </div>
             ))}
+          </div>
+          <div className="mt-6"><Separator /></div>
+          <div className="py-3">
+
           </div>
         </MaxWidthWrapper>
       </section>

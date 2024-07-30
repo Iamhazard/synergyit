@@ -1,10 +1,12 @@
-import type { Metadata } from "next";
 
+
+import type { Metadata } from "next";
 import "./globals.css";
 import { Roboto, IBM_Plex_Serif } from "next/font/google";
 import { Providers } from "./provider";
 import Navbar from "@/components/ui/layouts/Nav/NavBar";
 import { cn } from "@/lib/utils";
+import Footer from "@/components/ui/layouts/Footer";
 
 const roboto = Roboto({
   weight: ['400', '700'],
@@ -40,12 +42,11 @@ export default function RootLayout({
         )}
       >
         <main className="relative flex flex-col min-h-screen ">
-
           <Providers>
             <Navbar />
             {children}
           </Providers>
-
+          <Footer />
         </main>
         <div>
 

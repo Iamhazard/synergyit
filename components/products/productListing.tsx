@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { cn } from '@/lib/utils'; // Ensure this utility is defined
+import { cn } from '@/lib/utils';
 import ImageSlider from '../ui/layouts/Slider';
 import { Skeleton } from '../ui/skeleton';
 import { Product } from './Products';

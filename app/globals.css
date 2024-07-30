@@ -2,6 +2,51 @@
 @tailwind components;
 @tailwind utilities;
 
+
+.bgimage {
+  width: 99vw;
+  min-height: 120vh;
+  position: absolute;
+  display: flex;
+  override-colors: var(--background);
+  justify-content: center;
+  pointer-events: none;
+  background-image: url('/images/nav/image.webp');
+  background-size: cover;
+  background-position: center;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  background-repeat: no-repeat;
+}
+
+.bgimage:after {
+  content: "";
+  background-image: url('/images/nav/image.webp');
+  background-size: cover;
+  z-index: -1;
+  background-repeat: no-repeat;
+  position: absolute;
+  object-fit: cover;
+  width: 100%;
+  bottom: 10px;
+  height: 100%;
+  opacity: 0.4;
+
+}
+
+.gradient {
+  height: fit-content;
+  z-index: 3;
+  width: 100%;
+  background-image: url('/images/nav/gradient-bg.webp');
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  top: 80px;
+  opacity: 0.15;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -63,7 +108,9 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
 }
