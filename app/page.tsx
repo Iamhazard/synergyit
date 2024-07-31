@@ -7,6 +7,8 @@ import { GiCctvCamera } from "react-icons/gi";
 import Link from "next/link";
 import ProductReel from "@/components/products/Products";
 import { Separator } from "@/components/ui/separator";
+import Clients from "@/components/ui/Client";
+import OurWorks from "@/components/ui/layouts/Ourworks";
 
 
 const perks = [
@@ -56,15 +58,19 @@ export default function Home() {
         </div>
 
         {/* product */}
-        <div className="mt-12">
+        <div className="">
           <ProductReel
             query={{ sort: 'desc', limit: 4 }}
             href='/products?sort=recent'
             title='Our Products'
           />
         </div>
-
-
+        <div className="relative flex justify-center items-center flex-col overflow-hidden mx-auto sm:px-10 px-5">
+          <div className="max-w-7xl w-full">
+            <Clients />
+            <OurWorks />
+          </div>
+        </div>
 
       </MaxWidthWrapper>
 
@@ -91,11 +97,10 @@ export default function Home() {
               </div>
             ))}
           </div>
-          <div className="mt-6"><Separator /></div>
-          <div className="py-3">
 
-          </div>
+
         </MaxWidthWrapper>
+
       </section>
     </>
   );
