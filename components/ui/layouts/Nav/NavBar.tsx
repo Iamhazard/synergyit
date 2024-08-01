@@ -3,7 +3,6 @@ import Link from "next/link";
 import MaxWidthWrapper from "../MaxWidthWrapper";
 import { buttonVariants } from "../../button";
 import Image from "next/image";
-import NavItem from "./NavItem";
 import NavItems from "./NavItems";
 import MobileNav from "./MobileNav";
 

@@ -53,7 +53,7 @@ const ProductListing = ({
                         {label}
                     </p>
                     <div className='mt-1 text-gray-900'>
-                        {product.icon.displayName}
+                        {<product.icon />}
                     </div>
                 </div>
             </Link>

@@ -6,6 +6,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "www.vectorstock.com",
       },
+      {
+        protocol: "https",
+        hostname: "storage.googleapis.com",
+      },
     ],
   },
 };

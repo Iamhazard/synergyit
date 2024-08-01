@@ -59,7 +59,7 @@ const NavItem = ({
                         aria-hidden='true'
                     />
 
-                    <div className='relative bg-white'>
+                    <div className='relative bg-white pb-12'>
                         <div className='mx-auto max-w-7xl px-8'>
                             <div className='grid grid-cols-4 gap-x-8 gap-y-10 py-16'>
                                 <div className='col-span-4 col-start-1 grid grid-cols-3 gap-x-8'>
@@ -73,7 +73,7 @@ const NavItem = ({
                                                     src={item.imageSrc}
                                                     alt='product category image'
                                                     fill
-                                                    className='object-cover object-center'
+                                                    className='object-cover h-5 w-5 object-center'
                                                 />
                                             </div>
 
@@ -82,11 +82,7 @@ const NavItem = ({
                                                 className='mt-6 block font-medium text-gray-900'>
                                                 {item.name}
                                             </Link>
-                                            <p
-                                                className='mt-1'
-                                                aria-hidden='true'>
-                                                Shop now
-                                            </p>
+
                                         </div>
                                     ))}
                                 </div>

@@ -73,15 +73,15 @@ export const InfiniteMovingCards = ({
         <div
             ref={containerRef}
             className={cn(
-                // max-w-7xl to w-screen
-                "scroller relative z-20 w-screen overflow-hidden  [mask-image:linear-gradient(to_right,transparent,white_10%,white_100%,transparent)]",
+
+                "scroller relative z-20 w-screen overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_90%,transparent)]",
                 className
             )}
         >
             <ul
                 ref={scrollerRef}
                 className={cn(
-                    // change gap-16
+
                     " flex min-w-full shrink-0 gap-16 py-4 w-max flex-nowrap",
                     start && "animate-scroll ",
                     pauseOnHover && "hover:[animation-play-state:paused]"
@@ -89,19 +89,16 @@ export const InfiniteMovingCards = ({
             >
                 {items.map((item, idx) => (
                     <li
-                        //   change md:w-[450px] to md:w-[60vw] , px-8 py-6 to p-16, border-slate-700 to border-slate-800
-                        className="w-[90vw] max-w-full relative rounded-2xl border border-b-0
+                        className="w-[90vw] max-w-full relative rounded-2xl border border-b-1
              flex-shrink-0 border-slate-800 p-5 md:p-16 md:w-[60vw]"
                         style={{
-                            //   background:
-                            //     "linear-gradient(180deg, var(--slate-800), var(--slate-900)", //remove this one
-                            //   add these two
-                            //   you can generate the color from here https://cssgradient.io/
-                            background: "rgb(4,7,29)",
+
+                            background: "rgb(176,171,255)",
+                            backgroundBlendMode: 'overlay',
                             backgroundColor:
-                                "linear-gradient(90deg, rgba(4,7,29,1) 0%, rgba(12,14,35,1) 100%)",
+                                "linear-gradient(90deg, rgba(2,0,36,1) 1%, rgba(82,82,246,1) 35%, rgba(0,212,255,1) 84%)"
                         }}
-                        // change to idx cuz we have the same name
+
                         key={idx}
                     >
                         <blockquote>

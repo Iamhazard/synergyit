@@ -163,3 +163,35 @@ export const OurClient = [
 //     img: "/link.svg",
 //   },
 // ];
+
+export const roadmap = [
+  {
+    id: "0",
+    title: "CC Camera",
+    text: "Instillation and Maitenance.",
+    date: "May 2023",
+    status: "running",
+    imageUrl: "../images/cc.jpg",
+    colorful: true,
+  },
+ 
+];
+
+export const collabText =
+  "With smart automation and top-notch security, it's the perfect solution for teams looking to work smarter.";
+
+export const collabContent = [
+  {
+    id: "0",
+    title: "Seamless Integration",
+    text: collabText,
+  },
+  {
+    id: "1",
+    title: "Smart Automation",
+  },
+  {
+    id: "2",
+    title: "Top-notch Security",
+  },
+];
