@@ -1,59 +1,40 @@
-
-
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
-import { Roboto, IBM_Plex_Serif } from "next/font/google";
+import { auth } from "@/auth";
+import { SessionProvider } from "next-auth/react";
+import { Toaster } from "sonner";
 import { Providers } from "./provider";
-import Navbar from "@/components/ui/layouts/Nav/NavBar";
-import { cn } from "@/lib/utils";
-import Footer from "@/components/ui/layouts/Footer";
 
-const roboto = Roboto({
-  weight: ['400', '700'],
-  style: ['normal', 'italic'],
-  subsets: ['latin'],
-  display: 'swap',
-})
 
-const ibmPlexSerif = IBM_Plex_Serif({
-  subsets: ['latin'],
-  weight: ['400', '700'],
-  variable: '--font-ibm-plex-serif'
-})
+const inter = Inter({ subsets: ["latin"] });
+
 export const metadata: Metadata = {
   title: "Synergy It",
-  description: "Leading Tech company of Nepal",
-  icons: {
-    icon: '/images/synergy-Logo.png'
-  }
+  description:
+    "A",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
+  const session = await auth();
   return (
-    <html lang="en" className="h-full">
-      <body
-        className={cn(
-          "relative h-full font-sans antialiased ",
-          `${roboto} ${ibmPlexSerif.variable}`
-        )}
-      >
-        <main className="relative flex flex-col min-h-screen ">
+    <SessionProvider session={session}>
+      <html lang="en">
+
+        <body className={inter.className}>
           <Providers>
-            <Navbar />
-            {children}
+            <div className="main" />
+            <Toaster />
+            <div className="flex-grow flex-1">{children}</div>
           </Providers>
-          <Footer />
-        </main>
-        <div>
 
+        </body>
 
-        </div>
-
-      </body>
-    </html >
+      </html>
+    </SessionProvider>
   );
 }

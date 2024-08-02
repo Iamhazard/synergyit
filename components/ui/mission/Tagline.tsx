@@ -1,5 +1,5 @@
 import brackets from "@/public/images/svg/Bracket";
-import { TagLineProps } from "@/types/enum";
+import { TagLineProps } from "@/@types/enum";
 
 
 

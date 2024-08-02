@@ -22,3 +22,9 @@ export const ResetSchema = z.object({
 export const NewPasswordSchema = z.object({
   password: z.string().min(6, { message: "Minium 6 character required" }),
 });
+
+
+export const CategorySchema = z.object({
+  name: z.string(),
+  
+})

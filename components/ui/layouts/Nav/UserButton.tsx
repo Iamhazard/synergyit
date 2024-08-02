@@ -11,7 +11,7 @@ import {
 import Link from 'next/link'
 import { useAuth } from '@/hooks/use-auth'
 import { Button } from '../../button'
-import { User } from "@/types/enum"
+import { User } from "@/@types/enum"
 
 const UserAccountNav = ({ user }: { user: User }) => {
     const { signOut } = useAuth()

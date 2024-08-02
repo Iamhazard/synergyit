@@ -1,4 +1,4 @@
-import { Headers } from "@/types/enum";
+import { Headers } from "@/@types/enum";
 import TagLine from "./Tagline";
 
 

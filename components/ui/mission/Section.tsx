@@ -1,5 +1,5 @@
 import SectionSvg from "@/public/images/svg/SectionSvg";
-import { SectionLine } from "@/types/enum";
+import { SectionLine } from "@/@types/enum";
 
 const Section = ({
     className,

@@ -9,6 +9,8 @@ import ProductReel from "@/components/products/Products";
 import { Separator } from "@/components/ui/separator";
 import Clients from "@/components/ui/Client";
 import OurWorks from "@/components/ui/layouts/Ourworks";
+import Navbar from "@/components/ui/layouts/Nav/NavBar";
+import Footer from "@/components/ui/layouts/Footer";
 
 
 const perks = [
@@ -34,7 +36,8 @@ const perks = [
 
 export default function Home() {
   return (
-    <>
+    <main className="relative flex flex-col min-h-screen">
+      <Navbar />
       <div className="bgimage">
         <div className="gradient" />
       </div>
@@ -101,6 +104,7 @@ export default function Home() {
         </MaxWidthWrapper>
 
       </section>
-    </>
+      <div><Footer /></div>
+    </main>
   );
 }

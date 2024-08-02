@@ -33,3 +33,15 @@ export interface SectionLine {
   customPaddings?: string; 
   children: React.ReactNode;
 }
+
+export interface DeleteButtonPros {
+    label:string, 
+    onDelete: ()=>{}
+}
+
+export interface CategoryState {
+   id: string;
+  title: string;
+  createdAt: string;
+  updatedAt: string;
+}
