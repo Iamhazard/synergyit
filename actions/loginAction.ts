@@ -12,7 +12,7 @@ import * as z from "zod";
 export const login = async (
   values: z.infer<typeof LoginSchema>,
   callbackUrl?: string | null,
-  
+
 ) => {
   try {
     const validatedFields = LoginSchema.safeParse(values);
@@ -23,14 +23,14 @@ export const login = async (
 
     const { email, password } = validatedFields.data;
 
-   
+
     const existingUser = await getUserByEmail(email);
 
     if (!existingUser) {
       return { error: "Email does not exist!" };
     }
 
-  
+
 
     try {
       await signIn("credentials", {

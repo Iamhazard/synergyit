@@ -1,3 +1,4 @@
+'use client'
 import React, { use } from "react";
 import Link from "next/link";
 import MaxWidthWrapper from "../MaxWidthWrapper";
@@ -5,13 +6,17 @@ import { buttonVariants } from "../../button";
 import Image from "next/image";
 import NavItems from "./NavItems";
 import MobileNav from "./MobileNav";
+import { useSession } from "next-auth/react";
 
 const Navbar = () => {
     const user = null;
+    const { data: session } = useSession()
+    console.log(session, "logged in user")
     return (
         <div className="bg-white sticky z-50 top-0 inset-x-0 h-16">
             <header className="relative bg-white">
                 <MaxWidthWrapper>
+
                     <div className="border-b border-gray-300">
                         <div className="flex h-16 items-center">
                             {/* mbl   */}
@@ -29,14 +34,14 @@ const Navbar = () => {
                                 <div className="hidden lg:flex lg:items-center lg:justify-end lg:space-x-6">
                                     {user ? null : (
                                         <Link
-                                            href="/product"
+                                            href="me/product"
                                             className={buttonVariants({ variant: "btn" })}>
                                             Products{" "}
                                         </Link>
                                     )}
                                     {user ? null : (
                                         <Link
-                                            href="/enquires"
+                                            href="me/enquires"
                                             className={buttonVariants({ variant: "btn" })}>
                                             Enquiries{" "}
                                         </Link>

@@ -4,7 +4,6 @@ import { RegisterSchema } from "@/Schemas";
 
 import { db } from "@/lib/db";
 import { getUserByEmail } from "@/lib/user";
-
 import bcrypt from "bcryptjs";
 import * as z from "zod";
 
@@ -14,8 +13,8 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
   if (!validatedFiled.success) {
     return { error: "Invalid fields" };
   }
- 
-  const { email, password, name, lastName } = validatedFiled.data;
+
+  const { email, password, name, role } = validatedFiled.data;
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -28,14 +27,13 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
   await db.user.create({
     data: {
       name,
-      lastName,
       email,
       password: hashedPassword,
-      
+      role,
     },
   });
 
-;
 
-  return { success: "confirmation email Sent!" };
+
+  return { success: "Account Created!" };
 };

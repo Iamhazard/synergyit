@@ -23,10 +23,11 @@ import { FormSuccess } from "@/components/ui/layouts/form-success";
 import { Button } from "@/components/ui/button";
 import CardWrapper from "@/components/ui/layouts/card-wrapper";
 import { Input } from "@chakra-ui/react";
-import { login } from "@/actions/loginAction";
+import { register } from "@/actions/registerAction";
+import { UserRole } from "@prisma/client";
 
 
-const Adminlogin = () => {
+const AdminRegistration = () => {
     const params = useSearchParams();
     const callbackUrl = params?.get("callbackUrl");
     const urlError =
@@ -36,39 +37,57 @@ const Adminlogin = () => {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
-    const form = useForm<z.infer<typeof LoginSchema>>({
-        resolver: zodResolver(LoginSchema),
+    const role = "ADMIN";
+    const form = useForm<z.infer<typeof RegisterSchema>>({
+        resolver: zodResolver(RegisterSchema),
         defaultValues: {
             email: "",
             password: "",
+            name: "",
+            role: role as UserRole,
         },
     });
 
-    const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+
+    const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
         setError("");
         setSuccess("");
         startTransition(() => {
-            login(values, callbackUrl)
-                .then((data) => {
-                    if (data?.error) {
-                        form.reset();
-                        setError(data.error);
-                    }
-                })
-                .catch(() => setError("Something went wrong"));
+            register(values).then((data) => {
+                setError(data.error);
+                setSuccess(data.success);
+
+            });
         });
     };
     return (
         <CardWrapper
             headerLabel="Admin"
-            backButtonLabel="Admin Register"
-            blackButtonHref="/admin/register"
+            backButtonLabel="Admin login"
+            blackButtonHref="/"
         >
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                     <div className="space-y-4">
 
                         <>
+                            <FormField
+                                control={form.control}
+                                name="name"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Name</FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                type="text"
+                                                placeholder="Enter your Full Name"
+                                                {...field}
+                                                disabled={isPending}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}></FormField>
                             <FormField
                                 control={form.control}
                                 name="email"
@@ -121,7 +140,7 @@ const Adminlogin = () => {
                         disabled={isPending}
                         type="submit"
                         className="w-full">
-                        Login
+                        Register
                     </Button>
                 </form>
             </Form>
@@ -129,4 +148,4 @@ const Adminlogin = () => {
     )
 }
 
-export default Adminlogin
+export default AdminRegistration

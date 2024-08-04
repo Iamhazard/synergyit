@@ -1,7 +1,7 @@
 
 
 import type { Metadata } from "next";
-import "./globals.css";
+import "../globals.css";
 import { Roboto, IBM_Plex_Serif } from "next/font/google";
 
 import Navbar from "@/components/ui/layouts/Nav/NavBar";

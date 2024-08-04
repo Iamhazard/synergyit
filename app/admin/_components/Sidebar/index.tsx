@@ -192,6 +192,22 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           </li>
                         </ul>
                       </div>
+                      <div
+                        className={`translate transform overflow-hidden ${!open && "hidden"
+                          }`}
+                      >
+                        <ul className="mb-5.5 flex flex-col gap-2.5 pl-6">
+                          <li>
+                            <Link
+                              href="/admin/dashboard/company"
+                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-fuchsia-700 ${pathname === "/" && "text-white"
+                                }`}
+                            >
+                              Company
+                            </Link>
+                          </li>
+                        </ul>
+                      </div>
                       {/* <!-- Dropdown Menu End --> */}
                     </React.Fragment>
                   );

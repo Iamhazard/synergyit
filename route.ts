@@ -15,7 +15,7 @@ export const publicRoutes = ["/", "/auth/new-verification"];
 export const authRoutes = [
   "/login",
   "/register",
- 
+
 ];
 
 export const adminRoutes = ["/admin"];
@@ -33,6 +33,6 @@ export const apiAuthPrefix = "/api/auth";
  * @type {string}
  */
 
-export const DEFAULT_LOGIN_REDIRECT = "/me/dashboard";
-//export const DEFAULT_CLIENT_REDIRECT = "/clientdashboard";
+export const DEFAULT_LOGIN_REDIRECT = "/admin/dashboard";
+
 export const DEFAULT_LOGIN = "/login";

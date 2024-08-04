@@ -6,11 +6,10 @@ import { getAccountByUserId } from "./lib/account";
 
 
 export const {
-  handlers: { GET, POST },
-  auth,
+  handlers,
   signIn,
   signOut,
-  unstable_update,
+  auth
 } = NextAuth({
   pages: {
     signIn: "/auth/login",
@@ -26,69 +25,70 @@ export const {
   },
   callbacks: {
     async signIn({ user, account }) {
-      //console.log(" account form auth", account);
-      //Allow Oauth without email verification
+      // Allow OAuth without email verification
+      console.log("Signing in user:", user);
+
       if (account?.provider !== "credentials") return true;
 
       const existingUser = await getUserById(user?.id as string);
 
-      //prevent sign in without email verification
-
-      if (!existingUser?.emailVerified) {
-        return false;
+      // Prevent sign-in without email verification
+      if (existingUser?.emailVerified) {
+        return true;
       }
 
+      return true; // Ensure a boolean is returned
     },
-
     async session(params) {
-      const { session, token} = params as any;
+      const { session, token } = params as any;
       // console.log({ sessionToken: token }); 
       try {
-         if (token.sub && session.user) {
-        session.user.id = token.sub;
-      }
+        if (token.sub && session.user) {
+          session.user.id = token.sub;
+        }
 
-     
+        if (session.user) {
+          session.user.name = token.name;
+          session.user.email = token.email;
 
-      if (session.user) {
-        session.user.name = token.name;
-        session.user.lastName=token.lastName;
-        session.user.email = token.email;
-       
-      }
-      return session;
+        }
+        return session;
       } catch (error) {
-         console.error("Error setting session:", error);
+        console.error("Error setting session:", error);
         return session;
       }
-     
+
     },
     async jwt({ token }) {
       try {
-        token.exp = Math.floor(Date.now() / 1000) + (60 * 60 * 24) 
+        const unixTimestamp = 1693747542;
+        const isoDateString = new Date(unixTimestamp * 1000).toISOString();
+        console.log(isoDateString);
 
-      if (!token.sub) return token;
-      const existingUser = await getUserById(token.sub);
 
-      if (!existingUser) return token;
-      const existingAccount = await getAccountByUserId(existingUser.id);
-      token.isOAuth = !!existingAccount;
-      token.name = existingUser.name;
-      token.lastName = existingUser.lastName;
-      token.email = existingUser.email;
-      token.role = existingUser.role;
-      token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
 
-      //console.log({token}fan)
-      return token;
+        if (!token.sub) return token;
+        const existingUser = await getUserById(token.sub);
+
+        if (!existingUser) return token;
+        const existingAccount = await getAccountByUserId(existingUser.id);
+        token.isOAuth = !!existingAccount;
+        token.name = existingUser.name;
+        token.email = existingUser.email;
+        token.role = existingUser.role;
+
+
+        console.log({ token }, "token form login")
+        return token;
       } catch (error) {
         console.error("Error updating JWT token:", error);
         return token;
       }
-      
+
     },
   },
 
   session: { strategy: "jwt" },
+  secret: process.env.AUTH_SECRET,
   ...authConfig,
 });
