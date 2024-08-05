@@ -5,6 +5,7 @@ import { auth } from "@/auth";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "sonner";
 import { Providers } from "./provider";
+import { EdgeStoreProvider } from "@/lib/edgestore";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -23,13 +24,16 @@ export default async function RootLayout({
   const session = await auth();
   return (
     <SessionProvider session={session}>
+
       <html lang="en">
 
         <body className={inter.className}>
-          <Providers>
+          <Providers><EdgeStoreProvider>
             <div className="main" />
             <Toaster />
+
             <div className="flex-grow flex-1">{children}</div>
+          </EdgeStoreProvider>
           </Providers>
 
         </body>

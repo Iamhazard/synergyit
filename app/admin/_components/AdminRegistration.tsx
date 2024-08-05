@@ -1,12 +1,12 @@
 
 "use client";
 import React, { useState, useTransition } from "react";
-
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { Progress } from "@/components/ui/progress"
 
 import {
     Form,
@@ -25,6 +25,8 @@ import CardWrapper from "@/components/ui/layouts/card-wrapper";
 import { Input } from "@chakra-ui/react";
 import { register } from "@/actions/registerAction";
 import { UserRole } from "@prisma/client";
+import { SingleImageDropzone } from "@/components/ui/layouts/single-imageDropZonefile";
+import { useEdgeStore } from "@/lib/edgestore";
 
 
 const AdminRegistration = () => {
@@ -49,7 +51,20 @@ const AdminRegistration = () => {
         },
     });
 
+    const [file, setFile] = useState<File>();
+    const [urls, setUrls] = useState<string[]>([]);
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isCancelled, setIsCancelled] = useState(false)
+    const [progress, setProgress] = useState(0)
+    const { edgestore } = useEdgeStore();
 
+
+    if (isSubmitted) {
+        return <div className="flex flex-col items-center m-6">COMPLETE!!!</div>;
+    }
+    if (isCancelled) {
+        return <div className="flex flex-col items-center m-6">CANCELLED!!!</div>;
+    }
     const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
         setError("");
         setSuccess("");
@@ -67,6 +82,7 @@ const AdminRegistration = () => {
             });
         });
     };
+    console.log(urls)
     return (
         <CardWrapper
             headerLabel="Admin"
@@ -78,6 +94,46 @@ const AdminRegistration = () => {
                     <div className="space-y-4">
 
                         <>
+                            <div className="flex justify-center items-center">
+                                <div>
+                                    <input
+                                        type="file"
+                                        onChange={(e) => {
+                                            setFile(e.target.files?.[0]);
+                                        }}
+                                    />
+                                    <div className="h-[6px] w-44 border rounded  mt-6 ">
+                                        <Progress value={progress} className="bg-white transition-all duration-150" style={{
+                                            width: `${progress}`
+                                        }} />
+                                    </div>
+
+                                    <button
+                                        onClick={async () => {
+                                            if (file) {
+                                                const res = await edgestore.mypublicImages.upload({
+                                                    file,
+
+                                                    onProgressChange: (progress) => {
+
+                                                        setProgress(progress);
+                                                    },
+                                                });
+                                                setUrls({
+                                                    url: res.url,
+                                                    thumbnailUrl: res.thumbnailUrl,
+                                                })
+                                                console.log(res);
+
+
+                                            }
+                                        }}
+                                    >
+                                        Upload
+                                    </button>
+                                </div>
+                            </div>
+
                             <FormField
                                 control={form.control}
                                 name="name"
