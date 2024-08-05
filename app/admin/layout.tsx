@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import { auth } from "@/auth";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "sonner";
@@ -8,7 +7,7 @@ import Footer from "@/components/ui/layouts/Footer";
 
 
 
-const inter = Inter({ subsets: ["latin"] });
+
 
 export const metadata: Metadata = {
     title: "Synergy It",
@@ -26,7 +25,7 @@ export default async function RootLayout({
         <SessionProvider session={session}>
             <html lang="en">
 
-                <body className={inter.className}>
+                <body>
 
                     <div className="main" />
                     <Navbar />

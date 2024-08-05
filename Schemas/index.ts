@@ -28,9 +28,15 @@ export const NewPasswordSchema = z.object({
 
 export const CategorySchema = z.object({
   name: z.string(),
+  slug: z.string()
 
 })
 
+export const ProductSchema = z.object({
+  name: z.string(),
+  slug: z.string()
+
+})
 
 export const SendMail = z.object({
   name: z.string().min(1, "Name is required"),

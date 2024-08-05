@@ -5,7 +5,7 @@ import React, { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 import {
@@ -17,7 +17,7 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 
-import { LoginSchema, RegisterSchema } from "@/Schemas";
+import { RegisterSchema } from "@/Schemas";
 import { FormError } from "@/components/ui/layouts/form-error";
 import { FormSuccess } from "@/components/ui/layouts/form-success";
 import { Button } from "@/components/ui/button";
@@ -38,6 +38,7 @@ const AdminRegistration = () => {
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
     const role = "ADMIN";
+    const route = useRouter();
     const form = useForm<z.infer<typeof RegisterSchema>>({
         resolver: zodResolver(RegisterSchema),
         defaultValues: {
@@ -56,6 +57,12 @@ const AdminRegistration = () => {
             register(values).then((data) => {
                 setError(data.error);
                 setSuccess(data.success);
+                if (data.success) {
+                    route.push("/admin")
+
+                } else {
+                    setError(data.error)
+                }
 
             });
         });

@@ -2,7 +2,7 @@
 'use client'
 import { Card } from '@/components/ui/card';
 import axios from 'axios';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import React, { useEffect, useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -36,6 +36,7 @@ const Category = () => {
     const form = useForm<z.infer<typeof CategorySchema>>({
         defaultValues: {
             name: "",
+            slug: "",
 
         }
     })
@@ -81,19 +82,20 @@ const Category = () => {
         try {
             const fetchCategories = async () => {
                 try {
-                    const response = await axios.get('/api/category/getcategory');
+                    const response = await axios.get('/api/category/getCategory');
                     setCategories(response.data);
                 } catch (error) {
                     console.error('Error fetching categories:', error);
                 }
             };
+            fetchCategories()
 
         } catch (error) {
             console.log(error)
 
         }
     }
-    console.log("all category", categories)
+    //console.log("all category", categories)
     const submitCategory = async (data: any) => {
 
         setSubmitting(true);
@@ -101,7 +103,7 @@ const Category = () => {
         if (editCategories) {
             const fetchCategories = async () => {
                 try {
-                    const response = await axios.get('/api/category/getcategory');
+                    const response = await axios.get('/api/category/getCategory');
                     setCategories(response.data);
                 } catch (error) {
                     console.error('Error fetching categories:', error);
@@ -112,7 +114,7 @@ const Category = () => {
             resetForm();
         } else {
             try {
-                const response = await fetch('/api/category/new', {
+                const response = await fetch('/api/category', {
                     method: 'POST',
                     headers: {
                         "Content-Type": "multipart/form-data",
@@ -166,7 +168,7 @@ const Category = () => {
                                 <div className='space-y-4'>
 
                                     <div>
-                                        <div className='bg-gray-600 p-2 rounded-lg'>
+                                        {/* <div className='bg-gray-600 p-2 rounded-lg'>
                                             <div className='px-3'>
                                                 <Image className="rounded-lg" src={imagePreview || "/images/cc.jpg"} alt='' width={200} height={250}></Image>
                                             </div>
@@ -177,9 +179,24 @@ const Category = () => {
                                                         'mt-3 w-full'
                                                 })} >Edit</span>
                                             </Label>
-                                        </div>
+                                        </div> */}
                                     </div>
-
+                                    <FormField
+                                        control={form.control}
+                                        name="slug"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Slug</FormLabel>
+                                                <FormControl>
+                                                    <Input placeholder="Enter slug" {...field} />
+                                                </FormControl>
+                                                <FormDescription>
+                                                    Enter slug.
+                                                </FormDescription>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
                                     <FormField
                                         control={form.control}
                                         name="name"
@@ -187,7 +204,7 @@ const Category = () => {
                                             <FormItem>
                                                 <label>{editCategories ? "Update category" : "New Category"}
                                                     {editCategories && (
-                                                        <b>:{editCategories.title}</b>
+                                                        <b>:{editCategories.name}</b>
                                                     )}
                                                 </label>
                                                 <FormControl>
@@ -224,7 +241,7 @@ const Category = () => {
                                 categories.map((c: CategoryState) => (
                                     <div className='bg-gray-100 rounded-xl p-2 px-4 flex gap-1 mb-1 items-center' key={c.id}>
                                         <div className='grow'>
-                                            {c.title}
+                                            {`${c.name}  ${c.slug}`}
 
                                         </div>
                                         <div className="flex gap-1">
@@ -232,7 +249,7 @@ const Category = () => {
                                             <Button type="button"
                                                 onClick={() => {
                                                     setEditCategories(c)
-                                                    setCategoryName(c.title);
+                                                    setCategoryName(c.name);
                                                     setCategoryId(c.id)
                                                 }}
                                             >

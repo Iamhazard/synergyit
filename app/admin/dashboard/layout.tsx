@@ -6,7 +6,7 @@ import "../_components/css/style.css"
 import React, { useEffect, useState } from "react";
 import DefaultLayout from "../_components/Layouts/DefaultLayout";
 import Loader from "../_components/Loader";
-import withAdmin from "../_components/WithAdmin";
+
 
 
 const RootLayout = ({

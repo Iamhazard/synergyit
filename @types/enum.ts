@@ -29,19 +29,20 @@ export interface SectionLine {
   className?: string;
   id?: string;
   crosses?: boolean;
-  crossesOffset?: string; 
-  customPaddings?: string; 
+  crossesOffset?: string;
+  customPaddings?: string;
   children: React.ReactNode;
 }
 
 export interface DeleteButtonPros {
-    label:string, 
-    onDelete: ()=>{}
+  label: string,
+  onDelete: () => {}
 }
 
 export interface CategoryState {
-   id: string;
-  title: string;
+  id: string;
+  name: string;
+  slug: string;
   createdAt: string;
   updatedAt: string;
 }

@@ -51,10 +51,10 @@ export default function Home() {
             Synergy IT is in market to provide the service of Computer Network design LAN and WAN design for running critical corporate sectors like banks, hospitals and government sectors.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 mt-6 ">
-            <Link className={buttonVariants()} href="/mission">
+            <Link className={buttonVariants()} href="/me/mission">
               Our Mission{" "}
             </Link>
-            <Link href='/about'>
+            <Link href='me/about'>
               <Button variant="btn"> About US &rarr;</Button>
             </Link>
           </div>
@@ -71,7 +71,7 @@ export default function Home() {
         <div className="relative flex justify-center items-center flex-col overflow-hidden mx-auto sm:px-10 px-5">
           <div className="max-w-7xl w-full">
             <Clients />
-            <OurWorks />
+            {/* <OurWorks /> */}
           </div>
         </div>
 

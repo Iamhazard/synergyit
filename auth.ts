@@ -26,7 +26,7 @@ export const {
   callbacks: {
     async signIn({ user, account }) {
       // Allow OAuth without email verification
-      console.log("Signing in user:", user);
+      // console.log("Signing in user:", user);
 
       if (account?.provider !== "credentials") return true;
 
@@ -63,7 +63,7 @@ export const {
       try {
         const unixTimestamp = 1693747542;
         const isoDateString = new Date(unixTimestamp * 1000).toISOString();
-        console.log(isoDateString);
+        //console.log(isoDateString);
 
 
 
@@ -78,7 +78,7 @@ export const {
         token.role = existingUser.role;
 
 
-        console.log({ token }, "token form login")
+        //console.log({ token }, "token form login")
         return token;
       } catch (error) {
         console.error("Error updating JWT token:", error);

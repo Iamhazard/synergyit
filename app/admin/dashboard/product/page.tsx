@@ -11,9 +11,19 @@ import { buttonVariants } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
+interface ProductProps {
+    id: string,
+    name: string,
+    label: string,
+    catId: string
+
+
+}
+
 interface Category {
     id: string;
-    title: string;
+    name: string;
+
 }
 const Skills = () => {
     const {
@@ -27,9 +37,11 @@ const Skills = () => {
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [categories, setCategories] = useState<Category[]>([]);
+    const [products, setProducts] = useState<ProductProps[]>([]);
     const [productImage, setProductImage] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string>('');
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
 
@@ -53,30 +65,61 @@ const Skills = () => {
 
 
     useEffect(() => {
-        const fetchCategories = async () => {
+        const fetchProduct = async () => {
             try {
-                const response = await axios.get('/api/category/getcategory');
+                const response = await axios.get('/api/');
                 setCategories(response.data);
             } catch (error) {
                 console.error('Error fetching categories:', error);
             }
         };
 
-        fetchCategories();
+        fetchProduct();
     }, []);
 
-    //console.log(categories)
+    useEffect(() => {
+        fetchCategories()
+
+    }, [])
+
+
+    const fetchCategories = async () => {
+        try {
+            const fetchCategories = async () => {
+                try {
+                    const response = await axios.get('/api/');
+                    setCategories(response.data);
+                } catch (error) {
+                    console.error('Error fetching categories:', error);
+                }
+            };
+            fetchCategories()
+
+        } catch (error) {
+            console.log(error)
+
+        }
+    }
+
+    console.log(categories)
 
 
     const submitCategory = async (data: any) => {
+        console.log(data)
         setSubmitting(true);
         try {
-            // const formData = new FormData();
-            // formData.append('title', data.title);
-            // formData.append('categoryId', data.category_id);
-            // formData.append('category', data.category)
+            const formData = new FormData();
+            if (selectedFile) {
+                formData.append("imageUrl", selectedFile)
+            }
+            formData.append("name", data.name)
+            formData.append("Description", data.Description)
+            formData.append("categoryId", data.categoryId)
+            formData.append("label", data.label)
+            formData.append("label", data.slug)
 
-            const response = await fetch('/api/skills/new', {
+
+            const response = await fetch('/api/products', {
                 method: 'POST',
                 headers: {
                     "Content-Type": "multipart/form-data",
@@ -86,10 +129,10 @@ const Skills = () => {
             if (!response.ok) throw new Error("HTTP error " + response.status);
             // console.log(response)
 
-            setSuccessMessage('skills added successfully');
+            setSuccessMessage('Products added successfully');
             reset();
         } catch (error) {
-            setErrorMessage('Failed to add skills');
+            setErrorMessage('Failed to add products');
             console.error('Error:', error);
         } finally {
             setSubmitting(false);
@@ -122,7 +165,7 @@ const Skills = () => {
                                 categories.map((item) => {
                                     return (
                                         <option value={item.id} key={item.id}>
-                                            {item.title}
+                                            {item.name}
                                         </option>
                                     );
                                 })}
@@ -153,20 +196,41 @@ const Skills = () => {
                                 </label>
                                 <input
                                     className="appearance-none block  bg-gray-200 text-gray-700 border border-red-500 rounded py-1 px-1  leading-tight focus:outline-none focus:bg-white"
-                                    id="title"
+                                    id="name"
                                     type="text"
                                     placeholder=""
-                                    {...register('title', {
+                                    {...register('name', {
                                         required: true,
 
                                     })}
                                 />
-                                {errors.title && (
+                                {errors.name && (
                                     <span className="text-red-600 text-bold">
                                         Invalid category name
                                     </span>
                                 )}
                             </div>
+                            <div className=" md:w-1/2 px-3  md:mb-0">
+                                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                    Slug Name
+                                </label>
+                                <input
+                                    className="appearance-none block  bg-gray-200 text-gray-700 border border-red-500 rounded py-1 px-1  leading-tight focus:outline-none focus:bg-white"
+                                    id="slug"
+                                    type="text"
+                                    placeholder=""
+                                    {...register('slug', {
+                                        required: true,
+
+                                    })}
+                                />
+                                {errors.slug && (
+                                    <span className="text-red-600 text-bold">
+                                        Invalid Slug name
+                                    </span>
+                                )}
+                            </div>
+
                         </div>
                         <div className="flex flex-wrap -mx-3 ">
 
@@ -176,37 +240,37 @@ const Skills = () => {
                                 </label>
                                 <input
                                     className="appearance-none block  bg-gray-200 text-gray-700 border border-red-500 rounded px-1 py-1 leading-tight focus:outline-none focus:bg-white"
-                                    id="title"
+                                    id="label"
                                     type="text"
                                     placeholder=""
-                                    {...register('title', {
+                                    {...register('label', {
                                         required: true,
 
                                     })}
                                 />
-                                {errors.title && (
+                                {errors.label && (
                                     <span className="text-red-600 text-bold">
                                         Invalid category name
                                     </span>
                                 )}
                             </div>
                         </div>
-                        <div className="flex flex-wrap -mx-3 ">
+                        <div className="flex -mx-3 ">
 
-                            <div className="px-3 ">
+                            <div className="px-3 w-full">
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                                     Description
                                 </label>
                                 <Textarea
-                                    className="appearance-none block  bg-gray-200 text-gray-700 border border-red-500 rounded px-1 py-1 leading-tight focus:outline-none focus:bg-white"
-                                    id="title"
+                                    className=" h-[200px] appearance-none block  bg-gray-200 text-gray-700 border border-red-500 rounded px-1  py-1 leading-tight focus:outline-none focus:bg-white"
+                                    id="description"
                                     placeholder=""
-                                    {...register('title', {
+                                    {...register('description', {
                                         required: true,
 
                                     })}
                                 />
-                                {errors.title && (
+                                {errors.description && (
                                     <span className="text-red-600 text-bold">
                                         Invalid category name
                                     </span>

@@ -80,18 +80,17 @@ model Product {
 }
 
 model Companies {
-  id         String @id @default(auto()) @map("_id") @db.ObjectId
-  name       String
-  imageUrl   String
-  nameImgUrl String
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  imageUrl String
 }
 
-model Client {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
-  title       String
-  description String
-  imageUrl    String
-}
+// model Client {
+//   id          String @id @default(auto()) @map("_id") @db.ObjectId
+//   title       String
+//   description String
+//   imageUrl    String
+// }
 
 enum Status {
   Pending

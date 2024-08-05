@@ -10,6 +10,7 @@ import Image from 'next/image';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { buttonVariants } from '@/components/ui/button';
+import { Upload } from 'lucide-react';
 
 interface Category {
     id: string;
@@ -27,7 +28,7 @@ const Skills = () => {
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [categories, setCategories] = useState<Category[]>([]);
-
+    const [edit, setEdit] = useState(false);
     const [productImage, setProductImage] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string>('');
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -109,10 +110,12 @@ const Skills = () => {
             <main className="flex mx-auto max-w-[800px] justify-center items-center mt-10">
 
                 <Card className=' py-4 justify-center items-center space-x-5 gap-1 px-4'>
-                    <h1 className="text-3xl font-bold tracking-tight text-gray-900">Add Client</h1>
+                    <h1 className="text-3xl font-bold tracking-tight text-gray-900">Add Brand</h1>
 
                     <form onSubmit={handleSubmit(submitCategory)} className="px-4 py-4">
                         <div>
+                            <h1 className="text-xl font-medium tracking-tight text-gray-900">Add Brand logo</h1>
+
                             <div className='bg-gray-600 p-2 rounded-lg'>
                                 <div className='px-3'>
                                     <Image className="rounded-lg" src={imagePreview || "/images/cc.jpg"} alt='' width={200} height={250}></Image>
@@ -122,21 +125,24 @@ const Skills = () => {
                                     <span className={buttonVariants({
                                         className:
                                             'mt-3 w-full'
-                                    })} >Edit</span>
+                                    })} >{edit ? 'Uploading...' : 'Upload'}</span>
                                 </Label>
                             </div>
+                        </div>
+                        <div>
+
                         </div>
                         <div className="flex flex-wrap -mx-3 mb-6">
                             <div className=" md:w-1/2 px-3 mb-6 md:mb-0">
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                                    Client title
+                                    Brand title
                                 </label>
                                 <input
                                     className="appearance-none block  bg-gray-200 text-gray-700 border border-red-500 rounded py-1 px-1 leading-tight focus:outline-none focus:bg-white"
-                                    id="title"
+                                    id="name"
                                     type="text"
                                     placeholder=""
-                                    {...register('title', {
+                                    {...register('name', {
                                         required: true,
 
                                     })}
@@ -149,29 +155,6 @@ const Skills = () => {
                             </div>
 
                         </div>
-                        <div className="flex flex-wrap -mx-3 ">
-
-                            <div className="px-3 ">
-                                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                                    Description
-                                </label>
-                                <Textarea
-                                    className="appearance-none block  bg-gray-200 text-gray-700 border border-red-500 rounded px-1 py-1 leading-tight focus:outline-none focus:bg-white"
-                                    id="title"
-                                    placeholder=""
-                                    {...register('title', {
-                                        required: true,
-
-                                    })}
-                                />
-                                {errors.title && (
-                                    <span className="text-red-600 text-bold">
-                                        Invalid category name
-                                    </span>
-                                )}
-                            </div>
-                        </div>
-
                         <div className="mt-5 space-x-1">
                             <button
                                 type="submit"
