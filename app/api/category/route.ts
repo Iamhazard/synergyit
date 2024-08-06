@@ -6,7 +6,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
     if (req.method == "POST") {
         try {
 
-            const { name, slug } = await req.json()
+            const { name, slug, urls } = await req.json()
 
             if (!name) {
                 return new NextResponse("Unauthorized", { status: 401 });
@@ -16,6 +16,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
                 data: {
                     name,
                     slug,
+                    image: urls.url,
 
                 }
             })

@@ -6,7 +6,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
     if (req.method == "POST") {
         try {
 
-            const { name, slug, label, categoryId, category, description, imgUrl
+            const { name, slug, label, categoryId, description, urls
             } = await req.json()
 
 
@@ -22,8 +22,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
                     label,
                     categoryId,
                     description,
-                    imgUrl,
-                    category,
+                    imgUrl: urls.url,
 
                 }
             })
@@ -31,6 +30,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 
         } catch (error) {
             console.log(error)
+            return new NextResponse("Internal Server Error", { status: 500 });
 
         }
 

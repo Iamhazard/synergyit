@@ -19,6 +19,8 @@ import { FormError } from '@/components/ui/layouts/form-error';
 import { FormSuccess } from '@/components/ui/layouts/form-success';
 import { Label } from '@/components/ui/label';
 import Image from 'next/image';
+import { useEdgeStore } from '@/lib/edgestore';
+import Link from 'next/link';
 
 
 
@@ -40,6 +42,14 @@ const Category = () => {
 
         }
     })
+    const [file, setFile] = useState<File>();
+    const [urls, setUrls] = useState<{
+        url: string;
+        thumbnailUrl: string | null;
+    }>();
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isCancelled, setIsCancelled] = useState(false)
+    const { edgestore } = useEdgeStore();
     const [error, setError] = useState<string | undefined>("");
     const [categoryame, setCategoryName] = useState('');
     const [success, setSuccess] = useState<string | undefined>("");
@@ -53,25 +63,8 @@ const Category = () => {
     const [productImage, setProductImage] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string>('');
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const files = e.target.files;
 
-        if (files && files.length > 0) {
-            const selectedFile = files[0];
-            setProductImage(selectedFile);
-            setImagePreview(URL.createObjectURL(selectedFile));
-            setSelectedFile(selectedFile);
-        } else {
-            alert("Please select a file!");
-        }
 
-        const fileUploadElement = document.getElementById("file-upload")!;
-        if (selectedFile) {
-            fileUploadElement.textContent = selectedFile.name;
-        } else {
-            fileUploadElement.textContent = "";
-        }
-    };
 
     useEffect(() => {
         fetchCategories()
@@ -99,7 +92,10 @@ const Category = () => {
     const submitCategory = async (data: any) => {
 
         setSubmitting(true);
-
+        const formData = {
+            ...data,
+            urls
+        }
         if (editCategories) {
             const fetchCategories = async () => {
                 try {
@@ -119,7 +115,7 @@ const Category = () => {
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },
-                    body: JSON.stringify(data),
+                    body: JSON.stringify(formData),
                 })
                 if (!response.ok) throw new Error("HTTP error " + response.status);
                 //console.log(response)
@@ -136,6 +132,12 @@ const Category = () => {
         }
 
     };
+    if (isSubmitted) {
+        return <div className="flex flex-col items-center m-6">COMPLETE!!!</div>;
+    }
+    if (isCancelled) {
+        return <div className="flex flex-col items-center m-6">CANCELLED!!!</div>;
+    }
     const resetForm = () => {
         form.reset({
             name: "",
@@ -163,6 +165,42 @@ const Category = () => {
                     backButtonLabel='Back home'
                 >
                     <div>
+                        <div className="flex flex-col items-center m-6 gap-2">
+                            <input
+                                type="file"
+                                onChange={(e) => {
+                                    setFile(e.target.files?.[0])
+                                }}
+
+                                name="imageUrl"
+                                disabled={isPending}
+                            />
+                            <button
+                                className="bg-white rounde px-2 hover:opacity-55"
+                                onClick={async () => {
+                                    if (file) {
+                                        const res = await edgestore.mypublicImages.upload({ file })
+                                        setUrls({
+                                            url: res.url,
+                                            thumbnailUrl: res.thumbnailUrl
+                                        })
+                                    }
+                                }}
+                            >
+                                upload
+                            </button>
+                            {urls?.url && <Link href={urls.url} target="_blank" className="block">
+                                <img
+                                    src={urls.url}
+                                    alt="Full size image"
+                                    width={200}
+                                    height={200}
+                                    className="object-cover"
+                                />
+                                <span className="mt-2 block text-sm text-center">Full Image</span>
+                            </Link>}
+                            {/* {urls?.thumbnailUrl && <Link href={urls.thumbnailUrl} target="_blank">Thumb</Link>} */}
+                        </div>
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(submitCategory)} className="space-y-6">
                                 <div className='space-y-4'>

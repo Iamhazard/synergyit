@@ -49,6 +49,7 @@ export const {
 
         if (session.user) {
           session.user.name = token.name;
+          session.user.image = token.image;
           session.user.email = token.email;
 
         }
@@ -74,6 +75,7 @@ export const {
         const existingAccount = await getAccountByUserId(existingUser.id);
         token.isOAuth = !!existingAccount;
         token.name = existingUser.name;
+        token.image = existingUser.image
         token.email = existingUser.email;
         token.role = existingUser.role;
 

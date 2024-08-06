@@ -1,15 +1,15 @@
 
-// import NextAuth, { type DefaultSession } from "next-auth";
+import NextAuth, { type DefaultSession } from "next-auth";
 
-// export type ExtendedUser = DefaultSession["user"] & {
- 
-//   lastName:string;
+export type ExtendedUser = DefaultSession["user"] & {
 
-  
-// };
+    image: string;
 
-// declare module "next-auth" {
-//   interface Session {
-//     user: ExtendedUser;
-//   }
-// }
+
+};
+
+declare module "next-auth" {
+    interface Session {
+        user: ExtendedUser;
+    }
+}

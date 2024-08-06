@@ -24,16 +24,14 @@ const RootLayout = ({
   }, []);
 
   return (
-    <html lang="en">
-      <body suppressHydrationWarning={true}>
-        <section className="dark:bg-boxdark-2 dark:text-bodydark">
-          <>
-            {loading ? <Loader /> : children}
-          </>
 
-        </section>
-      </body>
-    </html>
+    <section className="dark:bg-boxdark-2 dark:text-bodydark">
+      <>
+        {loading ? <Loader /> : children}
+      </>
+
+    </section>
+
   );
 }
 export default RootLayout

@@ -1,24 +1,15 @@
 'use client'
 import { Card } from '@/components/ui/card';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import DefaultLayout from '../../_components/Layouts/DefaultLayout';
 import Breadcrumb from '../../_components/Breadcrumbs/Breadcrumb';
-import Image from 'next/image';
-import { Label } from '@/components/ui/label';
-import { buttonVariants } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-
-interface ProductProps {
-    id: string,
-    name: string,
-    label: string,
-    catId: string
+import { useEdgeStore } from '@/lib/edgestore';
+import Link from 'next/link';
 
 
-}
 
 interface Category {
     id: string;
@@ -37,37 +28,31 @@ const Skills = () => {
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [categories, setCategories] = useState<Category[]>([]);
-    const [products, setProducts] = useState<ProductProps[]>([]);
-    const [productImage, setProductImage] = useState<File | null>(null);
-    const [imagePreview, setImagePreview] = useState<string>('');
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [file, setFile] = useState<File>();
+    const [urls, setUrls] = useState<{
+        url: string;
+        thumbnailUrl: string | null;
+    }>();
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isCancelled, setIsCancelled] = useState(false)
+    const { edgestore } = useEdgeStore();
+    const [isPending, startTransition] = useTransition();
+    if (isSubmitted) {
+        return <div className="flex flex-col items-center m-6">COMPLETE!!!</div>;
+    }
+    if (isCancelled) {
+        return <div className="flex flex-col items-center m-6">CANCELLED!!!</div>;
+    }
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const files = e.target.files;
-
-        if (files && files.length > 0) {
-            const selectedFile = files[0];
-            setProductImage(selectedFile);
-            setImagePreview(URL.createObjectURL(selectedFile));
-            setSelectedFile(selectedFile);
-        } else {
-            alert("Please select a file!");
-        }
-
-        const fileUploadElement = document.getElementById("file-upload")!;
-        if (selectedFile) {
-            fileUploadElement.textContent = selectedFile.name;
-        } else {
-            fileUploadElement.textContent = "";
-        }
-    };
 
 
 
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const response = await axios.get('/api/');
+                const response = await axios.get('/api/products/getProduct');
+
                 setCategories(response.data);
             } catch (error) {
                 console.error('Error fetching categories:', error);
@@ -87,7 +72,7 @@ const Skills = () => {
         try {
             const fetchCategories = async () => {
                 try {
-                    const response = await axios.get('/api/');
+                    const response = await axios.get('/api/category/getCategory');
                     setCategories(response.data);
                 } catch (error) {
                     console.error('Error fetching categories:', error);
@@ -108,23 +93,17 @@ const Skills = () => {
         console.log(data)
         setSubmitting(true);
         try {
-            const formData = new FormData();
-            if (selectedFile) {
-                formData.append("imageUrl", selectedFile)
+
+            const formData = {
+                ...data,
+                urls
             }
-            formData.append("name", data.name)
-            formData.append("Description", data.Description)
-            formData.append("categoryId", data.categoryId)
-            formData.append("label", data.label)
-            formData.append("label", data.slug)
-
-
             const response = await fetch('/api/products', {
                 method: 'POST',
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
-                body: JSON.stringify(data),
+                body: JSON.stringify(formData),
             })
             if (!response.ok) throw new Error("HTTP error " + response.status);
             // console.log(response)
@@ -172,22 +151,45 @@ const Skills = () => {
                         </select>
 
                     </div>
+                    <div className="flex flex-col items-center m-6 gap-2">
+                        <input
+                            type="file"
+                            onChange={(e) => {
+                                setFile(e.target.files?.[0])
+                            }}
+
+                            name="imageUrl"
+                            disabled={isPending}
+                        />
+                        <button
+                            className="bg-white rounde px-2 hover:opacity-55"
+                            onClick={async () => {
+                                if (file) {
+                                    const res = await edgestore.mypublicImages.upload({ file })
+                                    setUrls({
+                                        url: res.url,
+                                        thumbnailUrl: res.thumbnailUrl
+                                    })
+                                }
+                            }}
+                        >
+                            upload
+                        </button>
+                        {urls?.url && <Link href={urls.url} target="_blank" className="block">
+                            <img
+                                src={urls.url}
+                                alt="Full size image"
+                                width={200}
+                                height={200}
+                                className="object-cover"
+                            />
+                            <span className="mt-2 block text-sm text-center">Full Image</span>
+                        </Link>}
+                        {/* {urls?.thumbnailUrl && <Link href={urls.thumbnailUrl} target="_blank">Thumb</Link>} */}
+                    </div>
                     <h1 className='text-gray-600  py-4'>Add Product</h1>
                     <form onSubmit={handleSubmit(submitCategory)} className="px-4 py-4">
-                        <div>
-                            <div className='bg-gray-600 p-2 rounded-lg'>
-                                <div className='px-3'>
-                                    <Image className="rounded-lg" src={imagePreview || "/images/cc.jpg"} alt='' width={200} height={250}></Image>
-                                </div>
-                                <Label>
-                                    <Input type='file' className='hidden' id="file-upload" onChange={handleFileChange} />
-                                    <span className={buttonVariants({
-                                        className:
-                                            'mt-3 w-full'
-                                    })} >Edit</span>
-                                </Label>
-                            </div>
-                        </div>
+
                         <div className="flex flex-wrap -mx-3 ">
 
                             <div className=" md:w-1/2 px-3  md:mb-0">

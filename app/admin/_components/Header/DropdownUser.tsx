@@ -2,14 +2,41 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
+export interface UserProp {
+  id: string;
+  name: string;
+  image: string,
 
+}
 const DropdownUser = () => {
   const { data: session } = useSession()
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [user, setUser] = useState<UserProp | null>(null);
 
+  //const userId = session?.user.id
+  const userId = "66b1e54423dbcb3c02cfd2cf";
   const trigger = useRef<any>(null);
+  const [error, setError] = useState<string | null>(null);
   const dropdown = useRef<any>(null);
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await fetch(`/api/auth/users/${userId}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch user');
+        }
+        const userData = await response.json();
+        setUser(userData);
+      } catch (err) {
+        setError('Error fetching user data');
+        console.error(err);
+      }
+    };
 
+    fetchUser();
+  }, [userId]);
+
+  console.log(user)
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
@@ -53,8 +80,8 @@ const DropdownUser = () => {
 
         <span className="h-12 w-12 rounded-full">
           <Image
-            width={112}
-            height={112}
+            width={150}
+            height={150}
             src={"/images/synergy-Logo.png"}
             style={{
               width: "auto",
@@ -92,7 +119,7 @@ const DropdownUser = () => {
         <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark">
           <li>
             <Link
-              href="/profile"
+              href="/admin/dashboard/profile"
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
             >
               <svg

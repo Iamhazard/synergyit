@@ -17,6 +17,7 @@ model User {
   email         String?   @unique
   role          UserRole  @default(ADMIN)
   password      String
+  code          String
   emailVerified DateTime?
   image         String?
   accounts      Account[]
@@ -58,21 +59,20 @@ model Session {
 
 // Add slugs to the models
 model Category {
-  id      String    @id @default(auto()) @map("_id") @db.ObjectId
-  name    String
-  slug    String
-  Product Product[]
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  name  String
+  image String?
+  slug  String
 
   @@index([slug])
 }
 
 model Product {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   slug        String
   label       String
-  categoryId  String   @db.ObjectId
-  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId  String @db.ObjectId
   description String
   imgUrl      String
 
@@ -80,9 +80,10 @@ model Product {
 }
 
 model Companies {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  name     String
-  imageUrl String
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  imageUrl     String
+  thumbnailUrl String
 }
 
 // model Client {

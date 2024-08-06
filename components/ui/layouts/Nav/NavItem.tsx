@@ -1,7 +1,6 @@
 'use client'
 
 import { PRODUCT_CATEGORIES } from '@/config'
-
 import { ChevronDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
@@ -82,7 +81,6 @@ const NavItem = ({
                                                 className='mt-6 block font-medium text-gray-900'>
                                                 {item.name}
                                             </Link>
-
                                         </div>
                                     ))}
                                 </div>
