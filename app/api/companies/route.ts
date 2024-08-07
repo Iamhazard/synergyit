@@ -6,12 +6,10 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
     if (req.method == "POST") {
         try {
 
-            const { userId, name, nameImgUrl, imageUrl
+            const { name, urls
             } = await req.json()
 
-            if (!userId) {
-                return new NextResponse("Unauthorized", { status: 401 });
-            }
+
 
             if (!name) {
                 return new NextResponse("Unauthorized", { status: 401 });
@@ -20,8 +18,8 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
             const newCategory = await db.companies.create({
                 data: {
                     name,
-                    nameImgUrl,
-                    imageUrl,
+                    thumbnailUrl: urls.thumbnailUrl,
+                    imageUrl: urls.url,
 
 
                 }

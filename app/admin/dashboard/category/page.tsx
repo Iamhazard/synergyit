@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import { Card } from '@/components/ui/card';
 import axios from 'axios';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import React, { useEffect, useState, useTransition } from 'react';
@@ -17,8 +16,6 @@ import DefaultLayout from '../../_components/Layouts/DefaultLayout';
 import Breadcrumb from '../../_components/Breadcrumbs/Breadcrumb';
 import { FormError } from '@/components/ui/layouts/form-error';
 import { FormSuccess } from '@/components/ui/layouts/form-success';
-import { Label } from '@/components/ui/label';
-import Image from 'next/image';
 import { useEdgeStore } from '@/lib/edgestore';
 import Link from 'next/link';
 
@@ -60,9 +57,7 @@ const Category = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [isPending, startTransition] = useTransition();
     const [categoryId, setCategoryId] = useState('')
-    const [productImage, setProductImage] = useState<File | null>(null);
-    const [imagePreview, setImagePreview] = useState<string>('');
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
 
 
 

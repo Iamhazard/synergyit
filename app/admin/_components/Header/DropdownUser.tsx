@@ -13,8 +13,8 @@ const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [user, setUser] = useState<UserProp | null>(null);
 
-  //const userId = session?.user.id
-  const userId = "66b1e54423dbcb3c02cfd2cf";
+  const userId = session?.user.id
+  //const userId = "66b1e54423dbcb3c02cfd2cf";
   const trigger = useRef<any>(null);
   const [error, setError] = useState<string | null>(null);
   const dropdown = useRef<any>(null);

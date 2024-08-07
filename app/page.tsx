@@ -6,9 +6,7 @@ import { IoHardwareChip } from "react-icons/io5";
 import { GiCctvCamera } from "react-icons/gi";
 import Link from "next/link";
 import ProductReel from "@/components/products/Products";
-import { Separator } from "@/components/ui/separator";
 import Clients from "@/components/ui/Client";
-import OurWorks from "@/components/ui/layouts/Ourworks";
 import Navbar from "@/components/ui/layouts/Nav/NavBar";
 import Footer from "@/components/ui/layouts/Footer";
 
@@ -64,7 +62,7 @@ export default function Home() {
         <div className="">
           <ProductReel
             query={{ sort: 'desc', limit: 4 }}
-            href='/products?sort=recent'
+            href='/me/product'
             title='Our Products'
           />
         </div>

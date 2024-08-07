@@ -46,3 +46,21 @@ export interface CategoryState {
   createdAt: string;
   updatedAt: string;
 }
+export interface ProductState {
+  id: string;
+  name: string;
+  slug: string;
+  label: string
+  imgUrl: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface BrandState {
+  id: string;
+  name: string;
+  imgUrl: string;
+  createdAt: string;
+  updatedAt: string;
+}

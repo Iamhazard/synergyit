@@ -16,6 +16,7 @@ const parse = (param: Param) => {
 const ProductsPage = ({
     searchParams,
 }: ProductsPageProps) => {
+
     const sort = parse(searchParams.sort)
     const category = parse(searchParams.category)
 

@@ -8,7 +8,17 @@ import Breadcrumb from '../../_components/Breadcrumbs/Breadcrumb';
 import { Textarea } from '@/components/ui/textarea';
 import { useEdgeStore } from '@/lib/edgestore';
 import Link from 'next/link';
+import { Header } from '@/components/ui/layouts/header';
+import { Button } from '@/components/ui/MovingButton';
+import { DeleteButton } from '../../_components/DeleteButton';
+import { ProductState } from '@/@types/enum';
 
+export interface Products {
+    id: string;
+    slug: string;
+    name: string;
+    data: ProductState[];
+}
 
 
 interface Category {
@@ -16,19 +26,21 @@ interface Category {
     name: string;
 
 }
-const Skills = () => {
+const Product = () => {
     const {
         register,
         handleSubmit,
         formState: { errors },
         reset,
     } = useForm();
-
+    const [categoryame, setCategoryName] = useState('');
+    const [editCategories, setEditCategories] = useState<ProductState | null>(null);
+    const [categoryId, setCategoryId] = useState('')
     const [submitting, setSubmitting] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [categories, setCategories] = useState<Category[]>([]);
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [products, setProducts] = useState<Products[]>([]);
     const [file, setFile] = useState<File>();
     const [urls, setUrls] = useState<{
         url: string;
@@ -46,14 +58,12 @@ const Skills = () => {
     }
 
 
-
-
     useEffect(() => {
         const fetchProduct = async () => {
             try {
                 const response = await axios.get('/api/products/getProduct');
-
-                setCategories(response.data);
+                console.log(response)
+                setProducts(response.data);
             } catch (error) {
                 console.error('Error fetching categories:', error);
             }
@@ -62,32 +72,14 @@ const Skills = () => {
         fetchProduct();
     }, []);
 
-    useEffect(() => {
-        fetchCategories()
-
-    }, [])
 
 
-    const fetchCategories = async () => {
-        try {
-            const fetchCategories = async () => {
-                try {
-                    const response = await axios.get('/api/category/getCategory');
-                    setCategories(response.data);
-                } catch (error) {
-                    console.error('Error fetching categories:', error);
-                }
-            };
-            fetchCategories()
 
-        } catch (error) {
-            console.log(error)
 
-        }
+
+    const handleDeleteClick = () => {
+
     }
-
-    console.log(categories)
-
 
     const submitCategory = async (data: any) => {
         console.log(data)
@@ -291,10 +283,44 @@ const Skills = () => {
                         {successMessage && <p className="text-green-600">{successMessage}</p>}
                         {errorMessage && <p className="text-red-600">{errorMessage}</p>}
                     </form>
+                    <div className='mt-4'>
+                        <Header label='Existing Product'></Header>
+                        {Array.isArray(products) && products.length > 0 ? (
+                            products.map((c) => (
+                                <div className='bg-gray-100 rounded-xl p-2 px-4 flex gap-1 mb-1 items-center' key={c.id}>
+                                    <div className='grow'>
+                                        {`${c.name}  ${c.slug}`}
+
+                                    </div>
+                                    <div className="flex gap-1">
+
+                                        <Button type="button"
+                                            onClick={() => {
+                                                setCategoryName(c.name);
+                                                setCategoryId(c.id)
+                                            }}
+                                        >
+                                            Edit
+                                        </Button>
+
+
+                                        <DeleteButton label='Delete'
+                                            onDelete={async () => handleDeleteClick()}
+                                        >
+
+                                        </DeleteButton>
+                                    </div>
+
+                                </div>
+                            ))
+                        ) : (<p className='px-4 '>No Products Available</p>)}
+
+                    </div>
+
                 </Card>
             </main>
         </DefaultLayout>
     );
 };
 
-export default Skills;
+export default Product;

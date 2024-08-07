@@ -6,7 +6,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
     if (req.method == "POST") {
         try {
 
-            const { name, slug, label, categoryId, description, urls
+            const { name, slug, label, category_id, description, urls
             } = await req.json()
 
 
@@ -20,7 +20,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
                     name,
                     slug,
                     label,
-                    categoryId,
+                    categoryId: category_id,
                     description,
                     imgUrl: urls.url,
 

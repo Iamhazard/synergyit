@@ -1,11 +1,9 @@
 'use client'
 
 import Link from 'next/link'
-import ProductListing from './productListing'
+import ProductListing, { Product, fetchProducts } from './productListing'
 import { TQueryValidator } from '@/lib/validators'
-import { GiCctvCamera } from 'react-icons/gi'
-import { FireExtinguisherIcon, LaptopIcon } from 'lucide-react'
-import { IoAccessibility } from 'react-icons/io5'
+import { useEffect, useState } from 'react'
 
 interface ProductReelProps {
     title: string
@@ -16,85 +14,26 @@ interface ProductReelProps {
 
 const FALLBACK_LIMIT = 4
 
-export interface Product {
-    id: string;
-    name: string;
-    category: string;
-    icon: React.ComponentType;
-    label?: string;
-    url?: string;
-    description?: string;
-}
-
-
-const Products: Product[] = [
-    {
-        id: "123",
-        name: "CCTV",
-        category: "aa",
-        icon: GiCctvCamera,
-        label: "ss",
-        url: "/images/cc.jpg",
-        description:
-            "Get your CCTV for Comapny which can provide the best solution for discouraging the theft and unwanted activity in sensitive areas."
-
-    },
-    {
-        id: "124",
-        name: "Computers / Laptops",
-        category: "aa",
-        icon: LaptopIcon,
-        url: "/images/cc.jpg",
-        description:
-            "Every assets on Our platform is verified by our team to ensure quality standard.Not happy ? We offer a 30-day refund guarantee period.",
-    },
-    {
-        id: "125",
-        name: "Access Control",
-        category: "aa",
-        icon: IoAccessibility,
-        url: "/images/cc.jpg",
-        description:
-            "We provide our customers Maintenance Scheme with Annual this scheme customers can use their hassle free environment.",
-    },
-    {
-        id: "126",
-        name: "Fire Extinguisher",
-        url: "/images/cc.jpg",
-        category: "aa",
-        icon: FireExtinguisherIcon,
-        description:
-            "We provide our customers Maintenance Scheme with Annual this scheme customers can use their hassle free environment.",
-    },
-];
-
-
 const ProductReel = (props: ProductReelProps) => {
+    const [products, setProducts] = useState<Product[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
     const { title, subtitle, href, query } = props
 
-    // const { data: queryResults, isLoading } =
-    //     trpc.getInfiniteProducts.useInfiniteQuery(
-    //         {
-    //             limit: query.limit ?? FALLBACK_LIMIT,
-    //             query,
-    //         },
-    //         {
-    //             getNextPageParam: (lastPage: { nextPage: any }) => lastPage.nextPage,
-    //         }
-    //     )
+    useEffect(() => {
+        const loadProducts = async () => {
+            setIsLoading(true);
+            const fetchedProducts = await fetchProducts();
+            setProducts(fetchedProducts);
+            setIsLoading(false);
+        };
 
-    // const products = queryResults?.pages.flatMap(
-    //     (page: { items: any }) => page.items
-    // )
+        loadProducts();
+    }, []);
 
-    // let map: (Product | null)[] = []
-    // if (products && products.length) {
-    //     map = products
-    // } else if (isLoading) {
-    //     map = new Array<null>(
-    //         query.limit ?? FALLBACK_LIMIT
-    //     ).fill(null)
-    // }
+    let displayProducts = products;
+    if (query.limit) {
+        displayProducts = products.slice(0, query.limit);
+    }
 
     return (
         <section className='py-12'>
@@ -115,7 +54,8 @@ const ProductReel = (props: ProductReelProps) => {
                 {href ? (
                     <Link
                         href={href}
-                        className='hidden text-sm font-medium text-blue-600 hover:text-blue-500 md:block'>
+                        className='hidden text-sm font-medium text-blue-600 hover:text-blue-500 md:block'
+                    >
                         View all Products{' '}
                         <span aria-hidden='true'>&rarr;</span>
                     </Link>
@@ -125,13 +65,24 @@ const ProductReel = (props: ProductReelProps) => {
             <div className='relative'>
                 <div className='mt-6 flex items-center w-full'>
                     <div className='w-full grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-10 lg:gap-x-8'>
-                        {Products.map((product, i) => (
-                            <ProductListing
-                                key={`product-${i}`}
-                                product={product}
-                                index={i}
-                            />
-                        ))}
+                        {isLoading ? (
+                            // Display loading placeholders
+                            Array(FALLBACK_LIMIT).fill(null).map((_, i) => (
+                                <ProductListing
+                                    key={`placeholder-${i}`}
+                                    product={null}
+                                    index={i}
+                                />
+                            ))
+                        ) : (
+                            displayProducts.map((product, i) => (
+                                <ProductListing
+                                    key={`product-${product.id}`}
+                                    product={product}
+                                    index={i}
+                                />
+                            ))
+                        )}
                     </div>
                 </div>
             </div>
