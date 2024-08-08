@@ -4,8 +4,8 @@ import "flatpickr/dist/flatpickr.min.css";
 import "../_components/css/satoshi.css"
 import "../_components/css/style.css"
 import React, { useEffect, useState } from "react";
-import DefaultLayout from "../_components/Layouts/DefaultLayout";
 import Loader from "../_components/Loader";
+import withAdmin from "../_components/AdminHighOrderFn";
 
 
 
@@ -34,4 +34,4 @@ const RootLayout = ({
 
   );
 }
-export default RootLayout
+export default withAdmin(RootLayout)

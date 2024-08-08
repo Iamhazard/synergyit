@@ -9,13 +9,13 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import Link from 'next/link'
-import { useAuth } from '@/hooks/use-auth'
+
 import { Button } from '../../button'
 import { User } from "@/@types/enum"
+import { signOut } from "next-auth/react"
 
 const UserAccountNav = ({ user }: { user: User }) => {
-    const { signOut } = useAuth()
-
+    //const { signOut } = useAuth()
     return (
         <DropdownMenu>
             <DropdownMenuTrigger
@@ -47,7 +47,7 @@ const UserAccountNav = ({ user }: { user: User }) => {
                 </DropdownMenuItem>
 
                 <DropdownMenuItem
-                    onClick={signOut}
+                    onClick={() => signOut({ callbackUrl: '/', redirect: true })}
                     className='cursor-pointer'>
                     Log out
                 </DropdownMenuItem>

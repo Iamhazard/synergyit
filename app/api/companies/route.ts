@@ -14,8 +14,11 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
             if (!name) {
                 return new NextResponse("Unauthorized", { status: 401 });
             }
+            if (!urls || typeof urls !== 'object' || !urls.thumbnailUrl || !urls.url) {
+                return new NextResponse("Invalid URLs data", { status: 400 });
+            }
 
-            const newCategory = await db.companies.create({
+            const newBrand = await db.companies.create({
                 data: {
                     name,
                     thumbnailUrl: urls.thumbnailUrl,
@@ -24,10 +27,11 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 
                 }
             })
-            return new Response(JSON.stringify(newCategory), { status: 201 });
+            return new Response(JSON.stringify(newBrand), { status: 201 });
 
         } catch (error) {
             console.log(error)
+            return new NextResponse("Internal Server Error", { status: 500 });
 
         }
 

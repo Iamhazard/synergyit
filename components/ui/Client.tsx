@@ -1,48 +1,82 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { InfiniteMovingCards } from "./layouts/Movingcard";
-import { companies, testimonials } from "@/data";
+import axios from "axios";
+
+interface Category {
+    imageUrl: string;
+    id: number;
+    name: string;
+    thumbnailUrl: string;
+}
 
 const Clients = () => {
+    const [categories, setCategories] = useState<Category[] | null>(null);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        fetchCategories();
+    }, []);
+
+    const fetchCategories = async () => {
+        try {
+            const response = await axios.get('/api/companies/getcompanies');
+            setCategories(response.data);
+        } catch (error) {
+            console.error('Error fetching categories:', error);
+            setError('Failed to load categories');
+        }
+    };
+    console.log(categories)
+    const items = categories || [];
+
     return (
         <section id="testimonials" className="py-6">
             <h1 className="heading">
-                Top Product from
-                <span className="text-purple">Synergy It</span>
+                Ours
+                <span className="text-purple">Product Categories</span>
             </h1>
 
             <div className="flex flex-col items-center max-lg:mt-6">
                 <div
-                    // remove bg-white dark:bg-black dark:bg-grid-white/[0.05], h-[40rem] to 30rem , md:h-[30rem] are for the responsive design
-                    className="h-[25vh] md:h-[20rem] rounded-md flex flex-col antialiased  items-center justify-center relative overflow-hidden"
+                    className="h-[25vh] md:h-[20rem] rounded-md flex flex-col antialiased items-center justify-center relative overflow-hidden"
                 >
                     <InfiniteMovingCards
-                        items={testimonials}
+                        items={items.map(cat => ({
+                            name: cat.name,
+                            thumbnailUrl: cat.thumbnailUrl,
+                            image: cat.imageUrl
+                        }))}
                         direction="right"
-                        speed="slow"
+                        speed="fast"
                     />
                 </div>
-                <h1 className=" text-2xl text-purple py-4">Our Brands</h1>
+                <h1 className="text-2xl text-purple py-4">Our Brands</h1>
                 <div className="flex flex-wrap items-center justify-center gap-4 md:gap-16 max-lg:mt-10">
-
-                    {companies.map((company) => (
-                        <React.Fragment key={company.id}>
-                            <div className="flex md:max-w-60 max-w-32 gap-2">
-                                <img
-                                    src={company.img}
-                                    alt={company.name}
-                                    className="md:w-10 w-5"
-                                />
-                                <img
-                                    src={company.nameImg}
-                                    alt={company.name}
-                                    width={company.id === 4 || company.id === 5 ? 100 : 150}
-                                    className="md:w-24 w-20"
-                                />
-                            </div>
-                        </React.Fragment>
-                    ))}
+                    {error ? (
+                        <p className="text-red-500">{error}</p>
+                    ) : categories ? (
+                        categories.map((cat) => (
+                            <React.Fragment key={cat.id}>
+                                <div className="flex md:max-w-60 max-w-32 gap-2">
+                                    {/* <img
+                                        src={cat.imageUrl}
+                                        alt={cat.name}
+                                        className="md:w-10 w-5"
+                                    /> */}
+                                    <img
+                                        src={cat.thumbnailUrl}
+                                        alt={cat.name}
+                                        width={cat.id === 4 || cat.id === 5 ? 100 : 150}
+                                        className="md:w-24 w-20"
+                                    />
+                                </div>
+                            </React.Fragment>
+                        ))
+                    ) : (
+                        <p>Loading categories...</p>
+                    )}
                 </div>
             </div>
         </section>

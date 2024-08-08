@@ -1,14 +1,13 @@
-
-
+'use client'
+import { fetchProducts, Product } from '@/components/products/productListing'
 import ProductReel from '@/components/products/Products'
 import MaxWidthWrapper from '@/components/ui/layouts/MaxWidthWrapper'
 import ImageSlider from '@/components/ui/layouts/Slider'
-import { PRODUCT_CATEGORIES } from '@/config'
-
-import { formatPrice } from '@/lib/utils'
+import getProductById from '@/lib/getProductByid'
 import { Check, Shield } from 'lucide-react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 interface PageProps {
     params: {
@@ -22,30 +21,32 @@ const BREADCRUMBS = [
 ]
 
 const Page = async ({ params }: PageProps) => {
+    const [products, setProducts] = useState<Product[]>([]);
+
+    console.log(params)
+    const [isLoading, setIsLoading] = useState(true);
     const { productId } = params
 
-
-    const [product] = [{
-        id: 1,
-        name: 'Product 1',
-        price: 10.99,
-        image: 'https://picsum.photos/200/300',
-        description: 'This is a product',
-        category: "aa",
-
-    }]
-
+    const product = await getProductById(productId)
     if (!product) return notFound()
 
-    const label = PRODUCT_CATEGORIES.find(
-        ({ value }) => value === product.category
+    useEffect(() => {
+        const loadProducts = async () => {
+            setIsLoading(true);
+            const fetchedProducts = await fetchProducts();
+            setProducts(fetchedProducts);
+            setIsLoading(false);
+        };
+
+        loadProducts();
+    }, []);
+
+    const label = products.find(
+        ({ value }) => value === product.categoryId
     )?.label
 
-    const validUrls = product.image
-        .map(({ image }) =>
-            typeof image === 'string' ? image : image.url
-        )
-        .filter(Boolean) as string[]
+    const validUrls = typeof product.imgUrl === 'string' ? [product.imgUrl] : product.imgUrl;
+
 
     return (
         <MaxWidthWrapper className='bg-white'>
@@ -83,15 +84,7 @@ const Page = async ({ params }: PageProps) => {
                         </div>
 
                         <section className='mt-4'>
-                            <div className='flex items-center'>
-                                <p className='font-medium text-gray-900'>
-                                    {formatPrice(product.price)}
-                                </p>
 
-                                <div className='ml-4 border-l text-muted-foreground border-gray-300 pl-4'>
-                                    {label}
-                                </div>
-                            </div>
 
                             <div className='mt-4 space-y-6'>
                                 <p className='text-base text-muted-foreground'>
@@ -142,7 +135,7 @@ const Page = async ({ params }: PageProps) => {
 
             <ProductReel
                 href='/products'
-                query={{ category: product.category, limit: 4 }}
+                query={{ category: product.categoryId, limit: 4 }}
                 title={`Similar ${label}`}
                 subtitle={`Browse similar high-quality ${label} just like '${product.name}'`}
             />

@@ -3,6 +3,7 @@ import authConfig from "./auth.config";
 import { db } from "./lib/db";
 import { getUserById } from "./lib/user";
 import { getAccountByUserId } from "./lib/account";
+import { UserRole } from "@prisma/client";
 
 
 export const {
@@ -46,9 +47,13 @@ export const {
         if (token.sub && session.user) {
           session.user.id = token.sub;
         }
+        if (token.role && session.user) {
+          session.user.role = token.role as UserRole;
+        }
 
         if (session.user) {
           session.user.name = token.name;
+          session.user.role = token.role;
           session.user.image = token.image;
           session.user.email = token.email;
 

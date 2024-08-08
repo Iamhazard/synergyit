@@ -11,16 +11,19 @@ export interface Product {
     slug: string;
     label: string;
     imgUrl: string;
+    value: string;
 }
 
 interface ProductListingProps {
     product: Product | null;
     index: number;
+
 }
 
 const ProductListing = ({
     product,
     index,
+
 }: ProductListingProps) => {
     const [isVisible, setIsVisible] = useState<boolean>(false);
 
@@ -45,7 +48,7 @@ const ProductListing = ({
                     'visible animate-in fade-in-5': isVisible,
                 }
             )}
-            href={`/product/${product.slug}`}>
+            href={`/product/${product.id}`}>
             <div className='flex flex-col w-full'>
                 <ImageSlider urls={validUrls} />
                 <h3 className='mt-4 font-medium text-sm text-gray-700'>

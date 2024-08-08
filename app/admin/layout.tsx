@@ -24,10 +24,10 @@ export default async function AdminLayout({
 
         <>
             <div className="main" />
-            <Navbar />
+
             <Toaster />
             <div className="flex-grow flex-1">{children}
-                <Footer />
+
             </div>
         </>
 
