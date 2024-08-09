@@ -9,8 +9,6 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
             const { name, urls
             } = await req.json()
 
-
-
             if (!name) {
                 return new NextResponse("Unauthorized", { status: 401 });
             }

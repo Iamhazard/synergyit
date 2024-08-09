@@ -5,7 +5,7 @@ import { NextRequest } from "next/server";
 interface IParams {
     ProductId?: string;
 }
-export async function GET(req: NextRequest, { params }: { params: IParams }) {
+export const GET = async (req: NextRequest, { params }: { params: IParams }) => {
     const { ProductId } = params;
     if (req.method === "GET") {
         try {
