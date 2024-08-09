@@ -4,7 +4,7 @@ import "./globals.css";
 import { auth } from "@/auth";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "sonner";
-import { Providers } from "./provider";
+import { Providers } from "../lib/provider";
 import { EdgeStoreProvider } from "@/lib/edgestore";
 
 
