@@ -17,8 +17,8 @@ const AboutPage = () => {
                     <div className="w-full lg:w-8/12 ">
                         <img
                             className="w-full h-full"
-                            src=""
-                            alt=" Staff"
+                            src="../../../images/svg/cctv.jpg"
+                            alt="cameras "
                         />
                     </div>
                 </div>
@@ -46,28 +46,15 @@ const AboutPage = () => {
 
                         </p>
                     </div>
-                    <div className="w-full lg:w-8/12 lg:pt-8">
-                        <h2 className="text-xl font-medium uppercase text-green-800 lg:text-xl">
-                            Our Staff
-                        </h2>
-                        <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 lg:gap-4 shadow-lg rounded-md">
-                            <div className="p-4 pb-6 flex justify-center flex-col items-center">
-                                <img
-                                    className="md:block hidden"
-                                    src=""
-                                    alt=""
-                                />
 
-                                <p className="font-medium text-xl leading-5 text-gray-800 mt-4">
-                                    Staff
-                                </p>
-                                <small className="font-normal text-base leading-6 text-gray-600 mt-2">d</small>
-
-
-                            </div>
-
-                        </div>
+                    <div className="w-full lg:w-8/12 ">
+                        <img
+                            className="w-full h-full"
+                            src="../../../images/svg/alco.jpg"
+                            alt="cameras "
+                        />
                     </div>
+
                 </div>
             </div>
         </MaxWidthWrapper>

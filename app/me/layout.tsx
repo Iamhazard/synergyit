@@ -20,13 +20,7 @@ const ibmPlexSerif = IBM_Plex_Serif({
   weight: ['400', '700'],
   variable: '--font-ibm-plex-serif'
 })
-export const metadata: Metadata = {
-  title: "Synergy It",
-  description: "Leading Tech company of Nepal",
-  icons: {
-    icon: '/images/synergy-Logo.png'
-  }
-};
+
 
 export default function RootLayout({
   children,

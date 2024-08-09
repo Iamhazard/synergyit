@@ -12,6 +12,7 @@ export interface Product {
     label: string;
     imgUrl: string;
     value: string;
+    description: string;
 }
 
 interface ProductListingProps {

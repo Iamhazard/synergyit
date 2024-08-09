@@ -33,14 +33,14 @@ const Navbar = () => {
                                 <div className="hidden lg:flex lg:items-center lg:justify-end lg:space-x-6">
                                     {user ? null : (
                                         <Link
-                                            href="me/product"
+                                            href="/me/product"
                                             className={buttonVariants({ variant: "btn" })}>
                                             Products{" "}
                                         </Link>
                                     )}
                                     {user ? null : (
                                         <Link
-                                            href="me/enquires"
+                                            href="/me/enquires"
                                             className={buttonVariants({ variant: "btn" })}>
                                             Enquiries{" "}
                                         </Link>

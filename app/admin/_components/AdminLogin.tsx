@@ -5,7 +5,7 @@ import React, { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 import {
@@ -28,6 +28,7 @@ import { login } from "@/actions/loginAction";
 
 const Adminlogin = () => {
     const params = useSearchParams();
+    const route = useRouter()
     const callbackUrl = params?.get("callbackUrl");
     const urlError =
         params?.get("error") === "OAuthAccountNotLinked"
@@ -53,6 +54,8 @@ const Adminlogin = () => {
                     if (data?.error) {
                         form.reset();
                         setError(data.error);
+                    } else {
+                        route.push('/admin/dashbaord')
                     }
                 })
                 .catch(() => setError("Something went wrong"));

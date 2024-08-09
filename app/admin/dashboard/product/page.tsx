@@ -57,15 +57,37 @@ const Product = () => {
         return <div className="flex flex-col items-center m-6">CANCELLED!!!</div>;
     }
 
+    useEffect(() => {
+        fetchCategories()
+
+    }, [])
+
+    const fetchCategories = async () => {
+        try {
+            const fetchCategories = async () => {
+                try {
+                    const response = await axios.get('/api/category/getCategory');
+                    setCategories(response.data);
+                } catch (error) {
+                    console.error('Error fetching categories:', error);
+                }
+            };
+            fetchCategories()
+
+        } catch (error) {
+            console.log(error)
+
+        }
+    }
 
     useEffect(() => {
         const fetchProduct = async () => {
             try {
                 const response = await axios.get('/api/products/getProduct');
-                console.log(response)
+                //console.log(response)
                 setProducts(response.data);
             } catch (error) {
-                console.error('Error fetching categories:', error);
+                console.error('Error fetching Product:', error);
             }
         };
 
