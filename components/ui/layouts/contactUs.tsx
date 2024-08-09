@@ -22,16 +22,18 @@ const ContactUs = () => {
                 },
                 body: JSON.stringify(data),
             });
-
+            console.log(response)
             const result = await response.json();
+
             if (response.ok) {
                 console.log('Email sent successfully', result);
                 // Optionally show a success message to the user
             } else {
                 console.error('Failed to send email', result);
-                // Optionally show an error message to the user
+                console.log(errors)
             }
         } catch (error) {
+            console.log(error)
             console.error('An error occurred while sending the email', error);
             // Optionally show an error message to the user
         }

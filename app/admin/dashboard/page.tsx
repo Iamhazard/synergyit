@@ -1,12 +1,11 @@
 'use client'
 
-import ECommerce from "../_components/Dashboard/E-commerce";
-import DefaultLayout from "../_components/Layouts/DefaultLayout";
-//import withAdmin from "../_components/AdminHighOrderFn";
+import dynamic from 'next/dynamic'
 
+const ECommerce = dynamic(() => import("../_components/Dashboard/E-commerce"), { ssr: false })
+const DefaultLayout = dynamic(() => import("../_components/Layouts/DefaultLayout"), { ssr: false })
 
-
-const DashbaordHome = () => {
+const DashboardHome = () => {
   return (
     <DefaultLayout>
       <ECommerce />
@@ -14,4 +13,4 @@ const DashbaordHome = () => {
   );
 }
 
-export default (DashbaordHome)
+export default DashboardHome

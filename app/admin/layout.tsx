@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Toaster } from "sonner";
-import Navbar from "@/components/ui/layouts/Nav/NavBar";
-import Footer from "@/components/ui/layouts/Footer";
+
 
 
 

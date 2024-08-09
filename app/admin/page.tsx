@@ -2,7 +2,6 @@
 import React from 'react'
 import Adminlogin from './_components/AdminLogin'
 import Image from 'next/image'
-import withAdmin from './_components/AdminHighOrderFn'
 
 const Adminpage: React.FC = () => {
     return (
