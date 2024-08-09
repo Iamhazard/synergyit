@@ -4,7 +4,7 @@ import * as z from "zod";
 
 export enum UserRole {
   ADMIN = 'ADMIN',
-  USER = 'USER',
+
 }
 
 export const LoginSchema = z.object({

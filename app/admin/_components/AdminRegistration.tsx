@@ -16,13 +16,12 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 
-import { RegisterSchema } from "@/Schemas";
+import { RegisterSchema, UserRole } from "@/Schemas";
 import { FormError } from "@/components/ui/layouts/form-error";
 import { FormSuccess } from "@/components/ui/layouts/form-success";
 import { Button } from "@/components/ui/button";
 import CardWrapper from "@/components/ui/layouts/card-wrapper";
 import { Input } from "@chakra-ui/react";
-import { UserRole } from "@prisma/client";
 import { useEdgeStore } from "@/lib/edgestore";
 
 
