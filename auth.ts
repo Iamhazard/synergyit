@@ -3,7 +3,8 @@ import authConfig from "./auth.config";
 import { db } from "./lib/db";
 import { getUserById } from "./lib/user";
 import { getAccountByUserId } from "./lib/account";
-import { UserRole } from "@prisma/client";
+import { UserRole } from "./Schemas";
+
 
 
 export const {
