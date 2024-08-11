@@ -1,78 +1,58 @@
 export const PRODUCT_CATEGORIES = [
   {
-    label: 'CC Camera',
+    label: 'Home',
     value: 'cc' as const,
     featured: [
       {
-        name: 'Ours picks',
-        href: `/products?category=products_kits`,
-        imageSrc: '/images/nav/cctv.webp',
-      },
-      {
-        name: 'New Arrivals',
-        href: '/products?category=products_kits&sort=desc',
-        imageSrc: '/images/nav/cctv.webp',
-      },
-        {
-        name: 'Video recorder',
-        href: '/products?category=icons',
-        imageSrc: '/images/nav/cctv.webp',
-      },
-      {
-        name: 'Bestsellers',
-        href: '/products?category=products_kits',
-        imageSrc: '/images/nav/cctv.webp',
+        name: 'Home',
+        href: ``,
       },
     ],
   },
   {
-    label: 'Networking',
+    label: 'Category',
     value: 'icons' as const,
     featured: [
       {
         name: 'Switch',
-        href: `/products?category=icons`,
-        imageSrc: '/images/nav/switch.webp',
+        href: `/me/category`,
       },
       {
         name: 'Hub',
-        href: '/products?category=icons',
-        imageSrc: '/images/nav/hu.webp',
+        href: '/me/category',
+
       },
-    
+
       {
         name: 'New Arrivals',
-        href: '/products?category=icons&sort=desc',
-        imageSrc: '/images/nav/switch.webp',
+        href: '/me/category',
+
       },
-      
+
     ],
   },
-    {
-    label: 'Others',
+  {
+    label: 'Product',
     value: 'icons' as const,
     featured: [
       {
         name: 'Computers',
-        href: `/products?category=icons`,
-        imageSrc: '/images/nav/computer.jpg',
+        href: `/me/product`,
       },
       {
         name: 'Laptops',
-        href: '/products?category=icons',
-        imageSrc: '/images/nav/laptop.jpg',
+        href: '/me/product',
       },
       {
         name: 'SSD Card',
-        href: '/products?category=icons',
-        imageSrc: '/images/nav/icons/bestsellers.jpg',
+        href: '/me/product',
+
       },
       {
         name: 'New Arrivals',
-        href: '/products?category=icons&sort=desc',
-        imageSrc: '/images/nav/computer.jpg',
+        href: '/me/product',
       },
-      
+
     ],
   },
 ]

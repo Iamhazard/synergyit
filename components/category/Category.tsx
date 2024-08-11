@@ -1,9 +1,10 @@
 'use client'
 
 import Link from 'next/link'
-import ProductListing, { fetchProducts, Product } from './productListing'
+import { Category, fetchProducts } from './CategoryListing'
 import { TQueryValidator } from '@/lib/validators'
 import { useEffect, useState } from 'react'
+import CategoryListing from './CategoryListing'
 interface ProductReelProps {
     title: string
     subtitle?: string
@@ -13,8 +14,8 @@ interface ProductReelProps {
 
 const FALLBACK_LIMIT = 4
 
-const ProductReel = (props: ProductReelProps) => {
-    const [products, setProducts] = useState<Product[]>([]);
+const CategoryReel = (props: ProductReelProps) => {
+    const [products, setProducts] = useState<Category[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const { title, subtitle, href, query } = props
 
@@ -74,7 +75,7 @@ const ProductReel = (props: ProductReelProps) => {
                         {isLoading ? (
                             // Display loading placeholders
                             Array(FALLBACK_LIMIT).fill(null).map((_, i) => (
-                                <ProductListing
+                                <CategoryListing
                                     key={`placeholder-${i}`}
                                     product={null}
                                     index={i}
@@ -82,7 +83,7 @@ const ProductReel = (props: ProductReelProps) => {
                             ))
                         ) : (
                             displayProducts.map((product, i) => (
-                                <ProductListing
+                                <CategoryListing
                                     key={`product-${product.id}`}
                                     product={product}
                                     index={i}
@@ -96,4 +97,4 @@ const ProductReel = (props: ProductReelProps) => {
     )
 }
 
-export default ProductReel
+export default CategoryReel

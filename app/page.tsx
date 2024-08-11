@@ -5,10 +5,10 @@ import { CheckCircle } from "lucide-react";
 import { IoHardwareChip } from "react-icons/io5";
 import { GiCctvCamera } from "react-icons/gi";
 import Link from "next/link";
-import ProductReel from "@/components/products/Products";
 import Clients from "@/components/ui/Client";
 import Navbar from "@/components/ui/layouts/Nav/NavBar";
 import Footer from "@/components/ui/layouts/Footer";
+import CategoryReel from "@/components/category/Category";
 
 
 const perks = [
@@ -59,11 +59,11 @@ export default function Home() {
         </div>
 
         {/* product */}
-        <div className="">
-          <ProductReel
+        <div className="px-8">
+          <CategoryReel
             query={{ sort: 'desc', limit: 4 }}
             href='/me/product'
-            title='Our Products'
+            title='Product Category'
           />
         </div>
         <div className="relative flex justify-center items-center flex-col overflow-hidden mx-auto sm:px-10 px-5">

@@ -4,9 +4,9 @@ import Link from "next/link";
 import MaxWidthWrapper from "../MaxWidthWrapper";
 import { buttonVariants } from "../../button";
 import Image from "next/image";
-import NavItems from "./NavItems";
-import MobileNav from "./MobileNav";
+import NavItems from "./NavItems"
 import { useSession } from "next-auth/react";
+import NavMobile from "./MobileNab";
 
 const Navbar = () => {
     const user = null;
@@ -19,15 +19,18 @@ const Navbar = () => {
                     <div className="border-b border-gray-300">
                         <div className="flex h-16 items-center">
                             {/* mbl   */}
-                            <MobileNav />
+                            <NavMobile />
+
                             <div className="ml-4 flex lg:ml-0">
                                 <Link href="/">
                                     <Image alt="logo" src='/images/synergy-Logo.png' width={150} height={140}
                                     />
                                 </Link>
                             </div>
-                            <div className="hidden z-50 lg:ml-8 lg:block lg:self-stretch">
+                            <div className="hidden md:block z-50 lg:ml-8 lg:block lg:self-stretch">
                                 <NavItems />
+
+
                             </div>
                             <div className="ml-auto flex items-center">
                                 <div className="hidden lg:flex lg:items-center lg:justify-end lg:space-x-6">
@@ -53,6 +56,7 @@ const Navbar = () => {
                             </div>
                         </div>
                     </div>
+
                 </MaxWidthWrapper>
             </header>
         </div>
