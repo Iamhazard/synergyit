@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Input } from '@/components/ui/input';
 import { Button, buttonVariants } from '@/components/ui/button';
-import { CategoryState } from '@/@types/enum';
+import { CategoryState, ImageState } from '@/@types/enum';
 import CardWrapper from '@/components/ui/layouts/card-wrapper';
 import { CategorySchema } from '@/Schemas';
 import { Header } from '@/components/ui/layouts/header';
@@ -52,11 +52,13 @@ const Category = () => {
     const [success, setSuccess] = useState<string | undefined>("");
     const [categories, setCategories] = useState<Categories | null>(null)
     const [editCategories, setEditCategories] = useState<CategoryState | null>(null);
+    const [editImage, setEditImage] = useState<ImageState | null>(null);
     const [submitting, setSubmitting] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [isPending, startTransition] = useTransition();
-    const [categoryId, setCategoryId] = useState('')
+    const [categoryId, setCategoryId] = useState('');
+    const [categoryImg, setCategoryImg] = useState('');
 
 
 
@@ -91,11 +93,17 @@ const Category = () => {
             ...data,
             urls
         }
+        const editedformData = {
+            categoryId,
+            categoryImg,
+            category: data.name,
+        }
         if (editCategories) {
-            const fetchCategories = async () => {
+            const editCategories = async () => {
                 try {
-                    const response = await axios.get('/api/category/getCategory');
-                    setCategories(response.data);
+                    const response = await axios.patch('/api/category/editcategory');
+                    console.log(response.data)
+                    setSuccessMessage('Category updated successfully');
                 } catch (error) {
                     console.error('Error fetching categories:', error);
                 }
@@ -146,9 +154,16 @@ const Category = () => {
         setEditCategories(null); // Clear the edit state
     };
 
-    const handleDeleteClick = () => {
-
-    }
+    const handleDeleteClick = async (id: string) => {
+        if (confirm('Are you sure you want to delete this category?')) {
+            try {
+                await axios.delete(`/api/category/${id}`);
+                fetchCategories();
+            } catch (error) {
+                console.error('Error deleting category:', error);
+            }
+        }
+    };
 
     return (
         <DefaultLayout>
@@ -161,6 +176,11 @@ const Category = () => {
                 >
                     <div>
                         <div className="flex flex-col items-center m-6 gap-2">
+                            <label>{editCategories ? "Update Image" : "New Image"}
+                                {editCategories && (
+                                    <b>:{editCategories.imageUrl}</b>
+                                )}
+                            </label>
                             <input
                                 type="file"
                                 onChange={(e) => {
@@ -201,18 +221,7 @@ const Category = () => {
                                 <div className='space-y-4'>
 
                                     <div>
-                                        {/* <div className='bg-gray-600 p-2 rounded-lg'>
-                                            <div className='px-3'>
-                                                <Image className="rounded-lg" src={imagePreview || "/images/cc.jpg"} alt='' width={200} height={250}></Image>
-                                            </div>
-                                            <Label>
-                                                <Input type='file' className='hidden' id="file-upload" onChange={handleFileChange} />
-                                                <span className={buttonVariants({
-                                                    className:
-                                                        'mt-3 w-full'
-                                                })} >Edit</span>
-                                            </Label>
-                                        </div> */}
+
                                     </div>
                                     <FormField
                                         control={form.control}
@@ -284,6 +293,7 @@ const Category = () => {
                                                     setEditCategories(c)
                                                     setCategoryName(c.name);
                                                     setCategoryId(c.id)
+                                                    setCategoryImg(c.imageUrl)
                                                 }}
                                             >
                                                 Edit
@@ -291,7 +301,7 @@ const Category = () => {
 
 
                                             <DeleteButton label='Delete'
-                                                onDelete={async () => handleDeleteClick()}
+                                                onDelete={async () => handleDeleteClick(c.id)}
                                             >
 
                                             </DeleteButton>

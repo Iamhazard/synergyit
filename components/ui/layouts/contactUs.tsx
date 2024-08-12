@@ -6,12 +6,14 @@ import MaxWidthWrapper from './MaxWidthWrapper';
 import { Button, FormLabel, Input, Textarea } from '@chakra-ui/react';
 import { useForm } from "react-hook-form";
 import { SendMail } from '@/Schemas'; // Make sure this schema is properly defined
+import { useRouter } from 'next/navigation';
 
 const ContactUs = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({
         resolver: zodResolver(SendMail)
     });
 
+    const router = useRouter()
     const onSubmit = async (data: any) => {
         console.log(data);
         try {
@@ -22,18 +24,22 @@ const ContactUs = () => {
                 },
                 body: JSON.stringify(data),
             });
-            console.log(response)
+
             const result = await response.json();
 
             if (response.ok) {
                 console.log('Email sent successfully', result);
-                // Optionally show a success message to the user
+
+                reset();
+
+                router.push('/me/enquires');
+
             } else {
                 console.error('Failed to send email', result);
-                console.log(errors)
+
             }
         } catch (error) {
-            console.log(error)
+            console.log(error);
             console.error('An error occurred while sending the email', error);
             // Optionally show an error message to the user
         }

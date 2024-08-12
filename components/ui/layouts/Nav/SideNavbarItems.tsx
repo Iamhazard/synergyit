@@ -11,22 +11,22 @@ const NAV_ITEMS: SideNavItem[] = [
         current: true,
     },
     {
-        title: "Menu",
-        path: "#",
+        title: "Product",
+        path: "/me/product",
         icon: <Icon icon="gg:menu-round" width="24" height="24" />,
         current: false,
 
     },
     {
         title: "About",
-        path: "/settings",
+        path: "/me/enquires",
         icon: <Icon icon="lucide:settings" width="24" height="24" />,
         current: false,
 
     },
     {
-        title: "contact",
-        path: "",
+        title: "Mission",
+        path: "/me/mission",
         icon: <Icon icon="lucide:mail" width="24" height="24" />,
         current: false,
     },

@@ -147,7 +147,6 @@ const Product = () => {
                         </label>
                         <select
                             id="category_id"
-
                             {...register("category_id", {
                                 required: "Category is required",
                             })}

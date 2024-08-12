@@ -42,7 +42,14 @@ export interface DeleteButtonPros {
 export interface CategoryState {
   id: string;
   name: string;
+  imageUrl: string;
   slug: string;
+  createdAt: string;
+  updatedAt: string;
+}
+export interface ImageState {
+  id: string;
+  imageUrl: string;
   createdAt: string;
   updatedAt: string;
 }

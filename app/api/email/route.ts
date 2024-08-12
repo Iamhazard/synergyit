@@ -6,10 +6,10 @@ import { NextRequest, NextResponse } from "next/server";
 export const POST = async (req: NextRequest) => {
     const { name, subject, message, email } = await req.json();
 
-    // const sender = {
-    //     name: 'Synergy',
-    //     address: 'info.synergyit@gmail.com'
-    // }
+    const sender = {
+        name: 'Synergy',
+        address: 'amrithazard@gmail.com'
+    }
 
     const recipients = [{
         name: name,

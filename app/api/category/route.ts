@@ -24,6 +24,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 
         } catch (error) {
             console.log(error)
+            return new NextResponse("Unauthorized", { status: 401 });
 
         }
 
