@@ -38,21 +38,17 @@ const ProductCard = () => {
 
   const fetchCategories = async () => {
     try {
-      const fetchCategories = async () => {
-        try {
-          const response = await axios.get('/api/category/getCategory');
-          setCategories(response.data);
-        } catch (error) {
-          console.error('Error fetching categories:', error);
-        }
-      };
-      fetchCategories()
-      console.log(categories)
-    } catch (error) {
-      console.log(error)
+      const response = await axios.get('/api/category/getCategory');
 
+      setCategories(response.data);
+      return response.data;
+
+    } catch (error) {
+      console.error('Error fetching categories:', error);
     }
   }
+
+  console.log(categories)
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white py-6 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">
       <h4 className="mb-6 px-7.5 text-xl font-semibold text-black dark:text-white">
@@ -71,7 +67,7 @@ const ProductCard = () => {
                 <Image
                   width={56}
                   height={56}
-                  src={pro.imgUrl}
+                  src={pro.image}
                   alt="User"
                   style={{
                     width: "auto",
@@ -88,14 +84,14 @@ const ProductCard = () => {
                   </h5>
                   <p>
                     <span className="text-sm text-black dark:text-white">
-                      <DescriptionList description={pro.description} />
+                      <DescriptionList description={pro.slug} />
                     </span>
                   </p>
                 </div>
                 <div className="flex h-10 w-[120px] items-center justify-center rounded-full bg-primary">
                   <span className="text-sm font-medium text-white">
 
-                    {pro.label}
+                    {pro.slug}
                   </span>
                 </div>
 

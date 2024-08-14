@@ -18,25 +18,25 @@ const DropdownUser = () => {
   const trigger = useRef<any>(null);
   const [error, setError] = useState<string | null>(null);
   const dropdown = useRef<any>(null);
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await fetch(`/api/auth/users/${userId}`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch user');
-        }
-        const userData = await response.json();
-        setUser(userData);
-      } catch (err) {
-        setError('Error fetching user data');
-        console.error(err);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     try {
+  //       const response = await fetch(`/api/auth/users/${userId}`);
+  //       if (!response.ok) {
+  //         throw new Error('Failed to fetch user');
+  //       }
+  //       const userData = await response.json();
+  //       setUser(userData);
+  //     } catch (err) {
+  //       setError('Error fetching user data');
+  //       console.error(err);
+  //     }
+  //   };
 
-    fetchUser();
-  }, [userId]);
+  //   fetchUser();
+  // }, [userId]);
 
-  console.log(user)
+  //console.log(user)
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {

@@ -8,7 +8,7 @@ export const POST = async (req: NextRequest) => {
 
     const sender = {
         name: 'Synergy',
-        address: 'amrithazard@gmail.com'
+        address: ''
     }
 
     const recipients = [{

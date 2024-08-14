@@ -8,9 +8,9 @@ const user = process.env.GMAIL_USER;
 const pass = process.env.GMAIL_PASS;
 
 const transporter = nodemailer.createTransport({
-  host: 'smtp-relay.brevo.com',
-  port: 587,
-  secure: false,
+  host: 'smtp.zoho.com',
+  port: 465,
+  secure: true,
   auth: {
     user: user,
     pass: pass,
@@ -34,8 +34,8 @@ export const SendEmailDto = async (dto: SendEmailDto) => {
   console.log(message)
 
   return await transporter.sendMail({
-    from: "amrithazard@gmail.com",
-    to: "amrithazard@gmail.com",
+    from: "info@synergyitnepal.com",
+    to: "info@synergyitnepal.com",
     html: `<html dir="ltr" lang="en">
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
