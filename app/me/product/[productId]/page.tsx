@@ -1,57 +1,58 @@
-'use client'
-import { fetchProducts, Product } from '@/components/products/productListing'
+
+
 import ProductReel from '@/components/products/Products'
 import MaxWidthWrapper from '@/components/ui/layouts/MaxWidthWrapper'
 import ImageSlider from '@/components/ui/layouts/Slider'
-import getProductById from '@/lib/getProductByid'
+import { db } from '@/lib/db'
 import { Check, Shield } from 'lucide-react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
+interface ProductProp {
+    id: string;
+    name: string;
+    slug: string;
+    label: string;
+    categoryId: string;
+    description: string;
+    imgUrl: string | string[];
+}
 interface PageProps {
     params: {
         productId: string
     }
 }
 
+
+
 const BREADCRUMBS = [
     { id: 1, name: 'Home', href: '/' },
     { id: 2, name: 'Products', href: '/products' },
 ]
 
-const Page = async ({ params }: PageProps) => {
-    const [products, setProducts] = useState<Product[]>([]);
+const ProdutDetailsPage = async ({ params }: PageProps) => {
 
-    console.log(params)
-    const [isLoading, setIsLoading] = useState(true);
     const { productId } = params
 
-    const product = await getProductById(productId)
-    if (!product) return notFound()
+    const products = await db.product.findUnique({
+        where: { id: productId },
 
-    useEffect(() => {
-        const loadProducts = async () => {
-            setIsLoading(true);
-            const fetchedProducts = await fetchProducts();
-            setProducts(fetchedProducts);
-            setIsLoading(false);
-        };
+    })
 
-        loadProducts();
-    }, []);
 
-    const label = products.find(
-        ({ value }) => value === product.categoryId
-    )?.label
 
-    const validUrls = typeof product.imgUrl === 'string' ? [product.imgUrl] : product.imgUrl;
+    if (!products) return notFound()
+
+    const validUrls = Array.isArray(products.imgUrl) ? products.imgUrl : [products.imgUrl]
+
+    const label = products.label || 'Category'
 
 
     return (
         <MaxWidthWrapper className='bg-white'>
             <div className='bg-white'>
-                <div className='mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8'>
+                <div className='mx-auto max-w-2xl px-4 py-12 sm:px-6 sm:py-24 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8'>
                     {/* Product Details */}
                     <div className='lg:max-w-lg lg:self-end'>
                         <ol className='flex items-center space-x-2'>
@@ -79,7 +80,7 @@ const Page = async ({ params }: PageProps) => {
 
                         <div className='mt-4'>
                             <h1 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>
-                                {product.name}
+                                {products.name}
                             </h1>
                         </div>
 
@@ -87,9 +88,11 @@ const Page = async ({ params }: PageProps) => {
 
 
                             <div className='mt-4 space-y-6'>
-                                <p className='text-base text-muted-foreground'>
-                                    {product.description}
-                                </p>
+                                <ul className='list-disc list-inside text-base text-muted-foreground'>
+                                    {products.description.split('\n').map((point, index) => (
+                                        <li key={index}>{point}</li>
+                                    ))}
+                                </ul>
                             </div>
 
                             <div className='mt-6 flex items-center'>
@@ -98,7 +101,8 @@ const Page = async ({ params }: PageProps) => {
                                     className='h-5 w-5 flex-shrink-0 text-green-500'
                                 />
                                 <p className='ml-2 text-sm text-muted-foreground'>
-                                    Eligible for instant delivery
+                                    Instant Setup To your Location.
+                                    Send us enquires about the Products.
                                 </p>
                             </div>
                         </section>
@@ -123,9 +127,7 @@ const Page = async ({ params }: PageProps) => {
                                         aria-hidden='true'
                                         className='mr-2 h-5 w-5 flex-shrink-0 text-gray-400'
                                     />
-                                    {/* <span className='text-muted-foreground hover:text-gray-700'>
-                                        30 Day Return Guarantee
-                                    </span> */}
+
                                 </div>
                             </div>
                         </div>
@@ -135,12 +137,12 @@ const Page = async ({ params }: PageProps) => {
 
             <ProductReel
                 href='/products'
-                query={{ category: product.categoryId, limit: 4 }}
+                query={{ category: products.categoryId, limit: 4 }}
                 title={`Similar ${label}`}
-                subtitle={`Browse similar high-quality ${label} just like '${product.name}'`}
+                subtitle={`Browse similar high-quality ${label} just like '${products.name}'`}
             />
         </MaxWidthWrapper>
     )
 }
 
-export default Page
+export default ProdutDetailsPage

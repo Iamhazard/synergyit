@@ -6,6 +6,7 @@ import { Skeleton } from '../ui/skeleton';
 import axios from 'axios';
 
 export interface Product {
+    categoryId: string;
     id: string;
     name: string;
     slug: string;
@@ -49,7 +50,7 @@ const ProductListing = ({
                     'visible animate-in fade-in-5': isVisible,
                 }
             )}
-            href={`/product/${product.id}`}>
+            href={`/me/product/${product.id}`}>
             <div className='flex flex-col w-full'>
                 <ImageSlider urls={validUrls} />
                 <h3 className='mt-4 font-medium text-sm text-gray-700'>
@@ -78,7 +79,7 @@ const ProductPlaceholder = () => {
 export default ProductListing;
 
 // Separate function to fetch products
-export const fetchProducts = async (): Promise<Product[]> => {
+export const fetchProducts = async (query: { category?: string | undefined; sort?: "asc" | "desc" | undefined; limit?: number | undefined; }): Promise<Product[]> => {
     try {
         const response = await axios.get('/api/products/getProduct');
         return response.data;

@@ -11,12 +11,13 @@
   override-colors: var(--background);
   justify-content: center;
   pointer-events: none;
-  background-image: url('/images/nav/traffic.png');
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/nav/traffic.png');
   background-size: cover;
   background-position: center;
   overflow-x: hidden;
   overflow-y: hidden;
   background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 .bgimage:after {
@@ -31,6 +32,7 @@
   bottom: 10px;
   height: 100%;
   opacity: 0.4;
+  background-attachment: fixed;
 
 }
 

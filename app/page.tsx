@@ -22,7 +22,7 @@ const perks = [
     name: "Guaranteed Quality ",
     Icon: CheckCircle,
     description:
-      "Every assets on Our platform is verified by our team to ensure quality standard.Not happy ? We offer a 30-day refund guarantee period. ",
+      "Every Product we use are verified by our team to ensure quality standard and we use Verified Brand",
   },
   {
     name: "Hardware / Software Support ",

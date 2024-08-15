@@ -21,7 +21,7 @@ const ProductReel = (props: ProductReelProps) => {
     useEffect(() => {
         const loadProducts = async () => {
             setIsLoading(true);
-            const fetchedProducts = await fetchProducts();
+            const fetchedProducts = await fetchProducts(query);
             setProducts(fetchedProducts);
             setIsLoading(false);
         };
@@ -41,7 +41,7 @@ const ProductReel = (props: ProductReelProps) => {
             <div className='md:flex md:items-center md:justify-between mb-4'>
                 <div className='max-w-2xl px-4 lg:max-w-4xl lg:px-0 '>
                     {title ? (
-                        <div className='bg-green-400 rounded-xl sm:mt-10 px-8 py-2 mt-10 flex'>
+                        <div className='rounded-xl sm:mt-10 px-8 py-2 mt-10 flex'>
                             <h1 className="heading">
                                 {title}
                             </h1>
@@ -85,6 +85,7 @@ const ProductReel = (props: ProductReelProps) => {
                                 <ProductListing
                                     key={`product-${product.id}`}
                                     product={product}
+
                                     index={i}
                                 />
                             ))

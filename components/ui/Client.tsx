@@ -33,7 +33,7 @@ const Clients = () => {
 
     return (
         <section id="testimonials" className="py-6">
-            <div className='items-center justify-center bg-green-400 rounded-xl w-fit px-8  py-2 flex'>
+            <div className='items-center justify-center rounded-xl w-fit px-8  py-2 flex'>
                 <h1 className="heading">
                     Brands
                     <span className="text-purple"> We Use</span>

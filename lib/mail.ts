@@ -19,6 +19,8 @@ const transporter = nodemailer.createTransport({
 } as SMTPTransport.Options)
 
 
+
+
 type SendEmailDto = {
   email: Mail.Address,
   recipients: Mail.Address[],
