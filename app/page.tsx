@@ -59,7 +59,7 @@ export default function Home() {
         </div>
 
         {/* product */}
-        <div className="px-8">
+        <div className="px-8 mt-4">
           <CategoryReel
             query={{ sort: 'desc', limit: 4 }}
             href='/me/product'

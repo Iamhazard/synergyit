@@ -50,7 +50,7 @@ const AboutPage = () => {
                     <div className="w-full lg:w-8/12 ">
                         <img
                             className="w-full h-full"
-                            src="../../../images/svg/alco.jpg"
+                            src=""
                             alt="cameras "
                         />
                     </div>
